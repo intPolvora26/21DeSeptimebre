@@ -1,0 +1,2052 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#03040a">
+<title>Para Zaira · 21.09.2026</title>
+<style>
+:root{
+  --bg:#03040a;
+  --bg2:#070b14;
+  --panel:rgba(8,12,22,.72);
+  --text:#fff9df;
+  --muted:#bfc5d3;
+  --gold:#ffe34f;
+  --gold2:#ffbf00;
+  --violet:#b45cff;
+  --cyan:#51f6ff;
+  --border:rgba(255,227,79,.55);
+  --shadow-gold:0 0 12px rgba(255,227,79,.35),0 0 28px rgba(255,191,0,.18);
+}
+*{box-sizing:border-box}
+html,body{
+  margin:0;width:100%;height:100%;overflow:hidden;
+  background:var(--bg);color:var(--text);
+  font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+button{font:inherit}
+.app{position:relative;width:100%;height:100dvh;overflow:hidden;background:var(--bg)}
+.screen{
+  position:absolute;inset:0;display:grid;place-items:center;
+  padding:max(24px,env(safe-area-inset-top)) max(18px,env(safe-area-inset-right))
+          max(24px,env(safe-area-inset-bottom)) max(18px,env(safe-area-inset-left));
+  opacity:0;visibility:hidden;transform:scale(1.015);
+  transition:opacity .7s ease,transform .7s ease,visibility .7s;
+  overflow:auto;
+}
+.screen.active{opacity:1;visibility:visible;transform:none;z-index:5}
+
+.center{
+  width:min(900px,94vw);text-align:center;position:relative;z-index:4;
+  margin:auto;
+}
+.kicker{
+  font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--cyan);font-weight:800;
+  text-shadow:0 0 12px rgba(81,246,255,.55);
+}
+.display{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(2.5rem,7vw,5.8rem);
+  line-height:1.02;font-weight:400;margin:.4rem auto 1rem;
+}
+.sub{
+  font-family:Georgia,"Times New Roman",serif;
+  color:var(--muted);
+  font-size:clamp(1rem,2.4vw,1.25rem);
+  line-height:1.7;max-width:680px;margin:0 auto;
+}
+.hand{
+  font-family:"Segoe Script","Brush Script MT",cursive;
+  color:var(--gold);font-size:clamp(1.7rem,4vw,3.1rem);
+  text-shadow:0 0 16px rgba(255,227,79,.38);
+}
+.btn{
+  border:1px solid var(--border);
+  color:#fff9d8;
+  background:linear-gradient(180deg,rgba(255,227,79,.08),rgba(255,227,79,.02));
+  border-radius:999px;padding:13px 22px;margin-top:28px;
+  cursor:pointer;font-weight:800;letter-spacing:.01em;
+  box-shadow:var(--shadow-gold),inset 0 0 0 1px rgba(255,255,255,.03);
+  backdrop-filter:blur(10px);
+  transition:.22s ease;
+}
+.btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 18px rgba(255,227,79,.5),0 0 42px rgba(255,191,0,.2);
+}
+.btn:active{transform:scale(.98)}
+
+.neon-frame{
+  border:1px solid rgba(255,227,79,.4);
+  box-shadow:
+    0 0 0 1px rgba(180,92,255,.08),
+    0 0 20px rgba(255,227,79,.12),
+    inset 0 0 22px rgba(81,246,255,.03);
+  background:linear-gradient(180deg,rgba(7,11,20,.78),rgba(3,4,10,.86));
+  backdrop-filter:blur(14px);
+}
+
+.ambient,.flowers-layer,.grid-glow{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.ambient{
+  background:
+    radial-gradient(circle at 12% 20%,rgba(180,92,255,.15),transparent 22%),
+    radial-gradient(circle at 84% 18%,rgba(81,246,255,.10),transparent 24%),
+    radial-gradient(circle at 50% 86%,rgba(255,191,0,.12),transparent 28%),
+    linear-gradient(180deg,#02030a 0%,#050815 46%,#03040a 100%);
+}
+.ambient:after{
+  content:"";position:absolute;inset:0;opacity:.24;
+  background-image:radial-gradient(rgba(255,255,255,.78) .65px,transparent .7px);
+  background-size:25px 25px;
+  mask-image:linear-gradient(to bottom,#000,transparent 76%);
+}
+.grid-glow{
+  opacity:.08;
+  background-image:
+    linear-gradient(rgba(81,246,255,.16) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(180,92,255,.18) 1px,transparent 1px);
+  background-size:54px 54px;
+  mask-image:linear-gradient(to bottom,transparent,#000 22%,#000 72%,transparent);
+}
+
+.progress{position:absolute;z-index:30;left:0;right:0;top:0;height:2px;background:rgba(255,255,255,.06)}
+.progress i{
+  display:block;height:100%;width:14.285%;
+  background:linear-gradient(90deg,var(--violet),var(--cyan),var(--gold));
+  box-shadow:0 0 12px rgba(81,246,255,.6);
+  transition:width .45s ease;
+}
+
+/* decorative flowers */
+.flower-svg{
+  position:absolute;
+  filter:drop-shadow(0 0 8px rgba(255,227,79,.35));
+  animation:sway var(--dur) ease-in-out infinite alternate;
+  transform-origin:50% 100%;
+  opacity:var(--op);
+}
+@keyframes sway{to{transform:rotate(var(--rot)) translateY(-4px)}}
+
+/* Intro */
+#intro .intro-box{
+  width:min(690px,92vw);padding:clamp(34px,7vw,70px) clamp(22px,6vw,54px);
+  border-radius:32px;
+}
+.date{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(2.5rem,9vw,5.6rem);
+  color:var(--gold);letter-spacing:.08em;
+  text-shadow:0 0 16px rgba(255,227,79,.42),0 0 38px rgba(255,191,0,.18);
+  margin:.5rem 0 1.4rem;
+}
+
+/* Transition */
+.lines{display:grid;gap:18px;margin-top:10px}
+.lines p{
+  margin:0;font-family:Georgia,serif;font-size:clamp(1.2rem,3vw,1.75rem);
+  opacity:0;transform:translateY(10px)
+}
+#transition.active .lines p:nth-child(1){animation:reveal .7s .35s forwards}
+#transition.active .lines p:nth-child(2){animation:reveal .7s 1.05s forwards}
+#transition.active .lines p:nth-child(3){animation:reveal .7s 1.75s forwards}
+@keyframes reveal{to{opacity:1;transform:none}}
+
+/* Garden */
+#garden{
+  background:
+    radial-gradient(circle at 50% 72%,rgba(255,191,0,.16),transparent 18%),
+    linear-gradient(180deg,#02030a 0%,#07101a 54%,#060709 100%);
+}
+#garden .display{max-width:880px}
+#garden .horizon{
+  position:absolute;left:0;right:0;bottom:0;height:36%;
+  background:linear-gradient(to top,rgba(0,0,0,.92),rgba(3,8,11,.3),transparent);
+}
+#garden .orb{
+  position:absolute;left:50%;bottom:15%;transform:translateX(-50%);
+  width:74px;height:74px;border-radius:50%;
+  background:#ffe76f;
+  box-shadow:0 0 18px rgba(255,231,111,.7),0 0 65px 20px rgba(255,191,0,.22);
+}
+
+/* Interactive */
+#interactive{
+  background:
+    radial-gradient(circle at 50% 16%,rgba(180,92,255,.09),transparent 28%),
+    radial-gradient(circle at 50% 70%,rgba(81,246,255,.055),transparent 35%),
+    #03040a;
+}
+.interactive-shell{
+  width:min(1000px,96vw);
+  border-radius:30px;
+  padding:clamp(28px,5vw,50px) clamp(16px,4vw,34px);
+}
+.flower-menu{
+  width:min(860px,94vw);
+  margin:34px auto 0;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:flex-start;
+  gap:clamp(16px,3vw,28px);
+}
+.flower-choice{
+  flex:0 1 142px;
+  min-width:118px;
+  max-width:150px;
+  appearance:none;border:1px solid rgba(255,227,79,.26);
+  background:
+    radial-gradient(circle at 50% 30%,rgba(255,227,79,.08),transparent 44%),
+    linear-gradient(180deg,rgba(10,15,26,.84),rgba(4,6,12,.9));
+  color:#f4ebca;cursor:pointer;text-align:center;
+  padding:18px 10px 14px;border-radius:22px;
+  box-shadow:
+    0 0 14px rgba(255,227,79,.08),
+    inset 0 0 16px rgba(81,246,255,.025);
+  transition:.24s ease;
+}
+.flower-choice:hover{
+  transform:translateY(-6px) scale(1.02);
+  border-color:rgba(255,227,79,.72);
+  box-shadow:
+    0 0 18px rgba(255,227,79,.22),
+    0 0 30px rgba(180,92,255,.1);
+}
+.flower-choice svg{
+  width:76px;height:76px;display:block;margin:auto;
+  filter:drop-shadow(0 0 10px rgba(255,227,79,.38));
+}
+.flower-choice span{
+  display:block;margin-top:12px;
+  font-family:Georgia,serif;font-size:.9rem;line-height:1.3
+}
+
+/* Modal */
+.modal{
+  position:absolute;inset:0;z-index:50;display:grid;place-items:center;padding:24px;
+  background:rgba(1,2,5,.78);backdrop-filter:blur(14px);
+  opacity:0;visibility:hidden;transition:.32s ease;
+}
+.modal.open{opacity:1;visibility:visible}
+.modal-card{
+  width:min(600px,92vw);padding:30px;border-radius:28px;text-align:center;
+  border:1px solid rgba(81,246,255,.36);
+  background:linear-gradient(160deg,rgba(8,12,22,.97),rgba(3,4,10,.98));
+  box-shadow:
+    0 0 24px rgba(81,246,255,.14),
+    0 0 60px rgba(180,92,255,.09),
+    inset 0 0 18px rgba(255,227,79,.035);
+}
+.modal-title{
+  font-family:Georgia,serif;color:var(--gold);
+  font-size:clamp(1.6rem,4vw,2.35rem);
+  margin:14px 0;
+  text-shadow:0 0 12px rgba(255,227,79,.3)
+}
+.modal-text{
+  font-family:Georgia,serif;line-height:1.8;
+  color:#ece5d4;font-size:1.04rem;
+}
+
+/* Central */
+#central{
+  background:
+    radial-gradient(circle at 50% 50%,rgba(255,227,79,.08),transparent 28%),
+    radial-gradient(circle at 20% 18%,rgba(180,92,255,.08),transparent 24%),
+    #03040a;
+}
+.central-box{
+  width:min(760px,92vw);
+  border-radius:28px;
+  padding:clamp(34px,7vw,70px) clamp(22px,6vw,52px);
+}
+.rule{
+  width:86px;height:1px;margin:24px auto;
+  background:linear-gradient(90deg,transparent,var(--cyan),var(--gold),transparent);
+  box-shadow:0 0 12px rgba(81,246,255,.48);
+}
+
+/* Special bouquet section — ramo SVG */
+#special{
+  background:
+    radial-gradient(circle at 50% 42%,rgba(255,227,79,.08),transparent 20%),
+    radial-gradient(circle at 50% 46%,rgba(81,246,255,.055),transparent 30%),
+    radial-gradient(circle at 50% 50%,rgba(180,92,255,.06),transparent 42%),
+    #020309;
+}
+.special-shell{
+  width:min(900px,96vw);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.bouquet-scene{
+  position:relative;
+  width:min(720px,94vw);
+  height:min(430px,52vh);
+  min-height:330px;
+  margin:8px auto 14px;
+  display:grid;
+  place-items:center;
+  overflow:visible;
+}
+.bouquet-scene:before{
+  content:"";
+  position:absolute;
+  left:50%;bottom:10%;
+  transform:translateX(-50%);
+  width:min(430px,72vw);
+  height:180px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle,rgba(255,227,79,.12) 0%,rgba(255,191,0,.055) 34%,rgba(81,246,255,.025) 52%,transparent 72%);
+  filter:blur(18px);
+}
+.bouquet-art{
+  position:relative;
+  width:min(620px,90vw);
+  max-height:100%;
+  overflow:visible;
+  filter:
+    drop-shadow(0 0 10px rgba(255,227,79,.10))
+    drop-shadow(0 0 28px rgba(81,246,255,.035));
+}
+.stem-path{
+  fill:none;
+  stroke:url(#stemGradient);
+  stroke-width:5;
+  stroke-linecap:round;
+  stroke-dasharray:520;
+  stroke-dashoffset:520;
+  opacity:0;
+}
+.leaf-shape{
+  fill:url(#leafGradient);
+  opacity:0;
+  transform-box:fill-box;
+  transform-origin:center;
+  transform:scale(.1);
+  filter:drop-shadow(0 0 4px rgba(79,255,166,.08));
+}
+.bloom{
+  opacity:0;
+  transform-box:fill-box;
+  transform-origin:center;
+  transform:scale(.04) translateY(8px);
+}
+.bloom .petal-soft{
+  filter:drop-shadow(0 0 4px rgba(255,228,94,.15));
+}
+.bloom.sunflower{
+  filter:drop-shadow(0 0 8px rgba(255,217,60,.22));
+}
+.bloom.rose{
+  filter:drop-shadow(0 0 7px rgba(255,220,76,.18));
+}
+.bouquet-wrap{
+  opacity:0;
+  transform-box:fill-box;
+  transform-origin:center bottom;
+  transform:translateY(12px) scale(.92);
+}
+#special.active .stem-path{
+  animation:drawStem 1.05s cubic-bezier(.2,.7,.2,1) forwards;
+  animation-delay:var(--d);
+}
+#special.active .leaf-shape{
+  animation:leafIn .55s cubic-bezier(.2,.8,.2,1.1) forwards;
+  animation-delay:var(--d);
+}
+#special.active .bloom{
+  animation:bloomOpen .82s cubic-bezier(.16,.9,.28,1.15) forwards;
+  animation-delay:var(--d);
+}
+#special.active .bouquet-wrap{
+  animation:wrapIn .7s ease forwards;
+  animation-delay:2.6s;
+}
+#special.active .bouquet-art{
+  animation:bouquetBreath 5s ease-in-out 3.8s infinite alternate;
+  transform-origin:50% 88%;
+}
+@keyframes drawStem{
+  0%{stroke-dashoffset:520;opacity:0}
+  8%{opacity:1}
+  100%{stroke-dashoffset:0;opacity:1}
+}
+@keyframes leafIn{
+  0%{opacity:0;transform:scale(.1) rotate(-6deg)}
+  70%{opacity:1;transform:scale(1.05) rotate(2deg)}
+  100%{opacity:.95;transform:scale(1) rotate(0)}
+}
+@keyframes bloomOpen{
+  0%{opacity:0;transform:scale(.04) translateY(12px) rotate(-2deg)}
+  62%{opacity:1;transform:scale(1.06) translateY(0) rotate(1deg)}
+  100%{opacity:1;transform:scale(1) translateY(0) rotate(0)}
+}
+@keyframes wrapIn{
+  from{opacity:0;transform:translateY(12px) scale(.92)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+@keyframes bouquetBreath{
+  from{transform:rotate(-.45deg) translateY(0)}
+  to{transform:rotate(.45deg) translateY(-2px)}
+}
+.note-card{
+  width:min(620px,92vw);margin:4px auto 0;
+  padding:22px 26px;border-radius:24px;
+  color:#fff4cd;font-family:Georgia,serif;line-height:1.75;
+  border:1px solid rgba(255,227,79,.34);
+  background:
+    linear-gradient(180deg,rgba(11,15,27,.82),rgba(4,6,12,.92));
+  box-shadow:
+    0 0 18px rgba(255,227,79,.07),
+    inset 0 0 16px rgba(81,246,255,.025);
+}
+
+/* Final */
+#final{
+  background:
+    radial-gradient(circle at 50% 26%,rgba(255,227,79,.12),transparent 22%),
+    radial-gradient(circle at 12% 16%,rgba(180,92,255,.09),transparent 24%),
+    radial-gradient(circle at 88% 18%,rgba(81,246,255,.07),transparent 22%),
+    linear-gradient(180deg,#020309 0%,#070a12 58%,#020309 100%);
+}
+.final-box{
+  width:min(760px,92vw);padding:clamp(36px,7vw,72px) clamp(22px,6vw,54px);
+  border-radius:32px;
+}
+.final-line{
+  font-family:Georgia,serif;font-size:clamp(1.55rem,4vw,2.7rem);
+  margin:28px auto 0;max-width:700px;line-height:1.35;
+}
+.signature{margin-top:24px}
+.tinyend{
+  margin-top:28px;font-size:.76rem;letter-spacing:.08em;
+  color:#9fa7b6;font-style:italic
+}
+
+@media(max-width:720px){
+  .interactive-shell{width:94vw}
+  .flower-menu{gap:14px}
+  .flower-choice{flex-basis:128px;max-width:138px}
+  .bouquet-scene{height:340px;min-height:300px}
+}
+@media(max-width:470px){
+  .screen{padding-left:14px;padding-right:14px}
+  .flower-menu{width:100%;gap:12px}
+  .flower-choice{
+    flex:0 1 calc(50% - 8px);
+    max-width:160px;min-width:118px;
+  }
+  .interactive-shell{padding-left:12px;padding-right:12px}
+  .bouquet-scene{height:310px;min-height:280px}
+  .note-card{padding:20px 18px}
+}
+@media(max-width:340px){
+  .flower-choice{flex-basis:100%;max-width:180px}
+}
+@media(orientation:landscape) and (max-height:560px){
+  .flower-menu{max-width:820px;gap:10px}
+  .flower-choice{flex-basis:120px;padding:12px 8px}
+  .flower-choice svg{width:58px;height:58px}
+  .bouquet-scene{height:250px;min-height:230px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{animation:none!important;transition:none!important}
+}
+
+
+
+/* ===== EXPERIENCE CONTROLS ===== */
+.fireflies{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden}
+.firefly{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--gold);box-shadow:0 0 7px 2px rgba(255,227,79,.46),0 0 16px rgba(81,246,255,.10);opacity:0;animation:fireflyMove var(--fd) ease-in-out var(--delay) infinite alternate}
+@keyframes fireflyMove{0%{opacity:.05;transform:translate3d(0,12px,0) scale(.65)}35%{opacity:.8}100%{opacity:.18;transform:translate3d(var(--fx),var(--fy),0) scale(1.2)}}
+.top-tools{position:absolute;z-index:45;top:max(14px,env(safe-area-inset-top));right:max(14px,env(safe-area-inset-right));display:flex;gap:8px;transition:opacity .25s ease}
+.tool-btn,.scene-btn,.mini-action{border:1px solid rgba(255,227,79,.26);background:rgba(3,5,11,.62);color:#fff6d2;backdrop-filter:blur(12px);box-shadow:0 0 12px rgba(255,227,79,.07);cursor:pointer;transition:.22s ease}
+.tool-btn{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:1rem}
+.tool-btn:hover,.tool-btn.active{border-color:rgba(81,246,255,.55);box-shadow:0 0 16px rgba(81,246,255,.18),0 0 24px rgba(180,92,255,.08);color:#fff}
+.scene-nav{position:absolute;inset:0;z-index:38;pointer-events:none;transition:opacity .25s ease}
+.scene-btn{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-size:1.75rem;pointer-events:auto}
+.scene-btn.prev{left:max(14px,env(safe-area-inset-left))}.scene-btn.next{right:max(14px,env(safe-area-inset-right))}
+.scene-btn:disabled{opacity:.18;cursor:default;box-shadow:none}
+.scene-btn:not(:disabled):hover{border-color:rgba(255,227,79,.68);box-shadow:0 0 18px rgba(255,227,79,.2)}
+.scene-count{position:absolute;z-index:40;left:50%;bottom:max(14px,env(safe-area-inset-bottom));transform:translateX(-50%);font-size:.68rem;letter-spacing:.18em;color:rgba(255,249,223,.5);text-transform:uppercase;pointer-events:none;transition:opacity .25s ease}
+.toast{position:absolute;z-index:80;left:50%;top:15%;transform:translate(-50%,-10px);padding:11px 16px;border-radius:999px;border:1px solid rgba(255,227,79,.3);background:rgba(4,6,12,.88);color:#fff2bc;font-size:.82rem;box-shadow:0 0 22px rgba(255,227,79,.12);opacity:0;visibility:hidden;transition:.3s ease;white-space:nowrap;max-width:88vw;text-align:center}
+.toast.show{opacity:1;visibility:visible;transform:translate(-50%,0)}
+
+/* Flower discovery */
+.flower-status{margin:20px auto 0;display:flex;justify-content:center;align-items:center;gap:10px;min-height:28px;color:#cbd2df;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase}
+.flower-status strong{color:var(--gold);text-shadow:0 0 10px rgba(255,227,79,.3)}
+.flower-choice.discovered{border-color:rgba(255,227,79,.65);box-shadow:0 0 16px rgba(255,227,79,.15),inset 0 0 16px rgba(81,246,255,.03)}
+.flower-choice.discovered:after{content:'✓';position:absolute;right:9px;top:8px;width:19px;height:19px;border-radius:50%;display:grid;place-items:center;font-size:.65rem;background:rgba(255,227,79,.18);border:1px solid rgba(255,227,79,.5);color:#fff4a9;box-shadow:0 0 8px rgba(255,227,79,.18)}
+.flower-choice{position:relative}
+.flower-choice.secret{border-color:rgba(180,92,255,.34);box-shadow:0 0 14px rgba(180,92,255,.08),inset 0 0 16px rgba(81,246,255,.025)}
+.flower-choice.secret svg{filter:drop-shadow(0 0 11px rgba(81,246,255,.26)) hue-rotate(18deg)}
+.flower-choice.secret span{color:#d9d1ff}
+.flower-menu.focus-mode .flower-choice:not(.opening){opacity:.28;filter:saturate(.55);transform:scale(.96)}
+.flower-choice.opening{transform:translateY(-6px) scale(1.05);border-color:rgba(81,246,255,.75);box-shadow:0 0 22px rgba(81,246,255,.25),0 0 40px rgba(255,227,79,.10)}
+#interactiveNext:disabled{opacity:.38;cursor:not-allowed;box-shadow:none}
+#interactiveNext.complete{border-color:rgba(81,246,255,.62);box-shadow:0 0 18px rgba(81,246,255,.18),0 0 28px rgba(255,227,79,.12)}
+.complete-flash{animation:completeFlash 1.1s ease}
+@keyframes completeFlash{0%,100%{text-shadow:0 0 0 transparent}45%{text-shadow:0 0 20px rgba(255,227,79,.75);color:#fff7ad}}
+
+/* Bouquet extras */
+.special-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:10px}
+.mini-action{border-radius:999px;padding:9px 14px;font-size:.76rem;letter-spacing:.04em}
+.mini-action:hover{border-color:rgba(81,246,255,.45);box-shadow:0 0 14px rgba(81,246,255,.12)}
+
+
+/* Keepsake / clean portrait scene + downloadable memory */
+#snapshot{background:radial-gradient(circle at 50% 24%,rgba(180,92,255,.12),transparent 28%),radial-gradient(circle at 50% 72%,rgba(255,227,79,.09),transparent 30%),#020309}
+.snapshot-shell{width:min(760px,96vw);display:flex;flex-direction:column;align-items:center;gap:14px}
+.keepsake-card{position:relative;aspect-ratio:9/16;height:min(72dvh,760px);max-width:88vw;border-radius:30px;overflow:hidden;border:1px solid rgba(255,227,79,.46);background:radial-gradient(circle at 50% 22%,rgba(255,227,79,.10),transparent 25%),radial-gradient(circle at 16% 22%,rgba(180,92,255,.12),transparent 28%),radial-gradient(circle at 84% 72%,rgba(81,246,255,.07),transparent 24%),linear-gradient(180deg,#02040b 0%,#09111c 52%,#03040a 100%);box-shadow:0 0 25px rgba(255,227,79,.10),0 0 70px rgba(180,92,255,.05),inset 0 0 32px rgba(81,246,255,.025);display:flex;flex-direction:column;justify-content:space-between;padding:clamp(22px,5vh,44px) 28px;transition:.35s ease}
+.keepsake-card:before{content:'';position:absolute;inset:0;opacity:.13;background-image:linear-gradient(rgba(81,246,255,.17) 1px,transparent 1px),linear-gradient(90deg,rgba(180,92,255,.17) 1px,transparent 1px);background-size:44px 44px;mask-image:linear-gradient(to bottom,#000,transparent 85%)}
+.keepsake-top,.keepsake-middle,.keepsake-bottom{position:relative;z-index:2;text-align:center}
+.keepsake-top{display:flex;flex-direction:column;gap:8px}
+.keepsake-date{font-family:Georgia,serif;color:#ffe96d;font-size:clamp(1.2rem,3.7vh,2rem);letter-spacing:.16em;text-shadow:0 0 16px rgba(255,227,79,.32)}
+.snapshot-meta{font-size:.7rem;letter-spacing:.11em;color:#9aa7bf;text-transform:uppercase}
+.monogram-stage{display:grid;place-items:center;gap:10px;margin:6px auto 14px}
+.monogram-badge{width:min(220px,34vh,58vw);aspect-ratio:1/1;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 50% 42%,rgba(255,227,79,.10),transparent 52%),radial-gradient(circle at 50% 50%,rgba(81,246,255,.05),transparent 72%),rgba(2,4,10,.22);box-shadow:0 0 20px rgba(255,227,79,.10),inset 0 0 30px rgba(180,92,255,.06)}
+.monogram-badge svg{width:100%;height:100%;display:block}
+.monogram-caption{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:#c6cedd}
+.keepsake-middle .quote{font-family:Georgia,serif;font-size:clamp(1.28rem,3.8vh,2.35rem);line-height:1.16;margin:4px 0 10px;color:#fff9df}
+.keepsake-middle .mini-hand{font-family:'Segoe Script','Brush Script MT',cursive;color:#ffe34f;font-size:clamp(1.2rem,3vh,1.9rem);text-shadow:0 0 14px rgba(255,227,79,.28)}
+.keepsake-bottom{font-family:Georgia,serif;color:#bcc5d5;font-size:.86rem;letter-spacing:.08em}
+.snapshot-flower{position:absolute;width:92px;height:92px;z-index:1;opacity:.86;filter:drop-shadow(0 0 10px rgba(255,227,79,.28))}
+.snapshot-flower.a{left:-20px;bottom:12%}.snapshot-flower.b{right:-18px;top:18%;transform:scale(.78) rotate(18deg)}.snapshot-flower.c{right:15%;bottom:-24px;transform:scale(1.12) rotate(-12deg)}
+.snapshot-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;transition:opacity .25s ease}
+.snapshot-clean .progress,.snapshot-clean .top-tools,.snapshot-clean .scene-nav,.snapshot-clean .scene-count,.snapshot-clean .snapshot-actions{opacity:0!important;pointer-events:none!important}
+.snapshot-clean #snapshot{padding:0;background:#020309}
+.snapshot-clean #snapshot .snapshot-shell{width:100%;height:100%;justify-content:center}
+.snapshot-clean #snapshot .keepsake-card{height:96dvh;max-width:96vw;border-radius:22px}
+.snapshot-note{font-size:.74rem;color:#99a4ba;letter-spacing:.04em;text-align:center}
+
+
+/* Final reaction */
+.final-reaction{margin-top:18px;color:#bfc8d7;font-family:Georgia,serif;font-size:clamp(.95rem,2.2vw,1.15rem);line-height:1.55}
+.restart-btn{margin-top:22px}
+
+@media(max-width:720px){
+  .scene-btn{top:auto;bottom:max(12px,env(safe-area-inset-bottom));transform:none;width:44px;height:44px}
+  .scene-btn.prev{left:14px}.scene-btn.next{right:14px}
+  .scene-count{bottom:max(25px,calc(env(safe-area-inset-bottom) + 10px))}
+  .top-tools{right:12px;gap:6px}.tool-btn{width:38px;height:38px}
+}
+@media(max-width:470px){
+  .keepsake-card{height:min(70dvh,650px);padding-left:22px;padding-right:22px}
+  .snapshot-flower{width:74px;height:74px}
+  .flower-status{font-size:.68rem}
+}
+
+
+
+/* ===== ANTESALA: CHICAGO ↔ CIUDAD GUZMÁN ===== */
+.prelaunch{
+  position:fixed;inset:0;z-index:9999;
+  display:grid;place-items:center;
+  min-height:100dvh;
+  padding:max(14px,env(safe-area-inset-top))
+          max(12px,env(safe-area-inset-right))
+          max(14px,env(safe-area-inset-bottom))
+          max(12px,env(safe-area-inset-left));
+  overflow:auto;overscroll-behavior:none;
+  background:
+    radial-gradient(circle at 16% 20%,rgba(180,92,255,.12),transparent 24%),
+    radial-gradient(circle at 84% 19%,rgba(81,246,255,.08),transparent 24%),
+    radial-gradient(circle at 50% 80%,rgba(255,227,79,.07),transparent 30%),
+    linear-gradient(180deg,#010208 0%,#040713 54%,#010208 100%);
+  transition:opacity .65s ease,visibility .65s ease;
+}
+.prelaunch.hidden,
+.prelaunch.dev-bypassed{
+  opacity:0;visibility:hidden;pointer-events:none;
+}
+.prelaunch-stars{
+  position:absolute;inset:0;pointer-events:none;opacity:.32;
+}
+.prelaunch-stars:before{
+  content:"";position:absolute;inset:0;
+  background-image:
+    radial-gradient(circle at 12% 18%,rgba(255,255,255,.85) 0 1px,transparent 1.4px),
+    radial-gradient(circle at 72% 12%,rgba(255,229,135,.72) 0 1px,transparent 1.5px),
+    radial-gradient(circle at 85% 62%,rgba(81,246,255,.45) 0 1px,transparent 1.3px),
+    radial-gradient(circle at 28% 72%,rgba(255,255,255,.55) 0 1px,transparent 1.3px);
+}
+.prelaunch-stars:after{
+  content:"";position:absolute;inset:0;opacity:.2;
+  background-image:radial-gradient(rgba(255,255,255,.75) .65px,transparent .8px);
+  background-size:29px 29px;
+}
+.distance-card{
+  position:relative;z-index:3;
+  width:min(820px,96vw);
+  max-height:calc(100dvh - 22px);
+  overflow:auto;scrollbar-width:none;
+  padding:clamp(22px,4.2dvh,46px) clamp(18px,4vw,42px);
+  border-radius:32px;
+  border:1px solid rgba(255,227,79,.17);
+  background:linear-gradient(180deg,rgba(5,8,17,.74),rgba(2,3,9,.86));
+  box-shadow:
+    0 0 38px rgba(255,227,79,.045),
+    0 0 80px rgba(81,246,255,.02),
+    inset 0 0 34px rgba(180,92,255,.018);
+  backdrop-filter:blur(14px);
+  text-align:center;
+}
+.distance-card::-webkit-scrollbar{display:none}
+.distance-kicker{
+  font-size:.66rem;letter-spacing:.32em;text-transform:uppercase;color:#8996aa;
+}
+.distance-title{
+  margin:9px auto 4px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(2rem,min(5.1vw,6.8dvh),4.5rem);
+  line-height:1.03;font-weight:400;color:#fff9df;
+}
+.distance-title em{
+  display:block;font-style:normal;color:#ffe45d;
+  text-shadow:0 0 18px rgba(255,227,79,.24);
+}
+.route{
+  width:min(680px,100%);
+  margin:clamp(16px,2.6dvh,26px) auto 10px;
+  cursor:pointer;
+}
+.route-cities{
+  display:grid;grid-template-columns:1fr auto 1fr;
+  align-items:center;gap:12px;
+}
+.city{display:flex;flex-direction:column;align-items:center;gap:7px}
+.city-dot{
+  width:15px;height:15px;border-radius:50%;
+  background:#0c111d;border:2px solid currentColor;
+  box-shadow:0 0 14px currentColor;
+  transition:.3s ease;
+}
+.city.from{color:var(--cyan)}
+.city.to{color:var(--gold)}
+.city-name{
+  font-family:Georgia,serif;
+  font-size:clamp(1rem,2.1vw,1.3rem);
+  color:#f2f4f8;
+}
+.city-sub{
+  font-size:.58rem;letter-spacing:.13em;text-transform:uppercase;color:#66758a;
+}
+.distance-pill{
+  min-width:130px;
+  padding:9px 13px;
+  border-radius:999px;
+  border:1px solid rgba(255,227,79,.22);
+  background:rgba(4,7,14,.72);
+  color:#ffe96d;
+  font-family:Georgia,serif;
+  font-size:clamp(1.08rem,2.6vw,1.55rem);
+  text-shadow:0 0 12px rgba(255,227,79,.16);
+}
+.route-line{
+  position:relative;height:2px;
+  margin:14px 10% 0;
+  background:linear-gradient(90deg,var(--cyan),rgba(255,255,255,.15) 47%,var(--gold));
+  box-shadow:0 0 14px rgba(81,246,255,.08);
+  overflow:visible;
+}
+.route-light{
+  position:absolute;top:50%;left:0;
+  width:9px;height:9px;border-radius:50%;
+  transform:translate(-50%,-50%);
+  background:#fff4a2;
+  box-shadow:0 0 8px #fff4a2,0 0 18px rgba(255,227,79,.55);
+  animation:distanceTravel 4.8s ease-in-out infinite;
+}
+@keyframes distanceTravel{
+  0%{left:0;opacity:.2}
+  12%{opacity:1}
+  88%{opacity:1}
+  100%{left:100%;opacity:.2}
+}
+.distance-copy{
+  max-width:650px;margin:15px auto 0;
+  font-family:Georgia,"Times New Roman",serif;
+  color:#c2c9d5;
+  font-size:clamp(.96rem,2vw,1.16rem);
+  line-height:1.6;
+}
+.distance-copy strong{color:#fff1ae;font-weight:400}
+.distance-action{
+  margin-top:18px;
+  border:1px solid rgba(255,227,79,.38);
+  border-radius:999px;
+  padding:11px 20px;
+  color:#fff7d1;
+  background:rgba(255,227,79,.03);
+  font-weight:800;cursor:pointer;
+  box-shadow:0 0 15px rgba(255,227,79,.07);
+  transition:.22s ease;
+}
+.distance-action:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 22px rgba(255,227,79,.16);
+}
+.distance-reveal{
+  max-height:0;opacity:0;overflow:hidden;transform:translateY(10px);
+  transition:max-height .75s ease,opacity .55s ease,transform .55s ease;
+}
+.prelaunch.revealed .distance-reveal{
+  max-height:340px;opacity:1;transform:none;
+}
+.prelaunch.revealed .distance-action{display:none}
+.distance-message{
+  margin:18px auto 0;max-width:620px;
+  font-family:Georgia,serif;
+  font-size:clamp(1.03rem,2.35vw,1.33rem);
+  line-height:1.55;color:#fff8df;
+}
+.distance-message .gold{
+  color:#ffe45d;
+  text-shadow:0 0 14px rgba(255,227,79,.2);
+}
+.distance-signoff{
+  margin-top:14px;
+  font-family:"Segoe Script","Brush Script MT",cursive;
+  color:#d9cc93;
+  font-size:clamp(.98rem,2vw,1.2rem);
+  line-height:1.55;
+}
+.distance-foot{
+  margin-top:18px;
+  font-size:.65rem;letter-spacing:.11em;
+  text-transform:uppercase;color:#58667a;
+}
+.route.activated .city-dot{transform:scale(1.15)}
+.route.activated .distance-pill{
+  border-color:rgba(255,227,79,.5);
+  box-shadow:0 0 18px rgba(255,227,79,.1);
+}
+
+/* ===== MODO DESARROLLADOR LOCAL ===== */
+.dev-panel{
+  position:fixed;z-index:20000;right:12px;bottom:12px;
+  width:min(390px,calc(100vw - 24px));
+  padding:13px;border-radius:17px;
+  border:1px solid rgba(81,246,255,.32);
+  background:rgba(2,4,10,.95);
+  backdrop-filter:blur(16px);
+  box-shadow:0 0 26px rgba(81,246,255,.1);
+  color:#eafcff;display:none;
+}
+.dev-mode .dev-panel{display:block}
+.dev-title{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;
+  font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;
+  color:#7cf7ff;margin-bottom:9px;
+}
+.dev-badge{
+  padding:3px 6px;border:1px solid rgba(81,246,255,.25);
+  border-radius:999px;font-size:.57rem;
+}
+.dev-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}
+.dev-btn,.dev-select{
+  border:1px solid rgba(255,255,255,.11);
+  border-radius:9px;background:#080d17;color:#edfaff;
+  padding:8px 9px;font-size:.72rem;cursor:pointer;
+}
+.dev-btn:hover{border-color:rgba(255,227,79,.45)}
+.dev-btn.warn{color:#ffbcbc;border-color:rgba(255,130,130,.22)}
+.dev-select{grid-column:1/-1;width:100%}
+.dev-row{display:flex;gap:7px;margin-top:7px}
+.dev-row .dev-btn{flex:1}
+.dev-note{
+  font-size:.63rem;color:#7d8ca3;line-height:1.38;margin-top:9px;
+}
+.dev-toggle{
+  border:0;background:transparent;color:#7cf7ff;cursor:pointer;
+}
+.dev-panel.collapsed .dev-body{display:none}
+
+/* ===== RESPONSIVE DE LA ANTESALA ===== */
+@media(max-width:650px){
+  .distance-card{
+    width:100%;
+    padding:20px 13px;
+    border-radius:24px;
+  }
+  .route-cities{gap:6px}
+  .distance-pill{
+    min-width:100px;
+    padding:8px;
+    font-size:1rem;
+  }
+  .city-name{font-size:.96rem}
+  .city-sub{font-size:.49rem;letter-spacing:.08em}
+  .route-line{margin-left:8%;margin-right:8%}
+}
+@media(max-height:720px){
+  .distance-card{padding-top:13px;padding-bottom:13px}
+  .distance-title{font-size:clamp(1.85rem,6.5dvh,3.3rem)}
+  .route{margin-top:10px}
+  .distance-copy{font-size:.9rem;line-height:1.4}
+  .distance-action{margin-top:11px;padding:8px 16px}
+  .distance-message{margin-top:11px;font-size:.96rem;line-height:1.4}
+  .distance-signoff{margin-top:8px}
+  .distance-foot{margin-top:9px}
+}
+@media(max-width:700px){
+  .dev-panel{max-height:45dvh;overflow:auto}
+}
+
+
+/* ===== AJUSTES RESPONSIVE GLOBALES ===== */
+@supports (height:100svh){
+  .app{height:100svh}
+}
+@supports (height:100dvh){
+  .app{height:100dvh}
+}
+.screen{
+  overscroll-behavior:contain;
+  scrollbar-width:none;
+}
+.screen::-webkit-scrollbar{display:none}
+@media(max-width:600px){
+  .screen{
+    padding-left:max(12px,env(safe-area-inset-left));
+    padding-right:max(12px,env(safe-area-inset-right));
+  }
+  .display{
+    font-size:clamp(2rem,min(10vw,6dvh),3.7rem);
+  }
+  .sub{
+    font-size:clamp(.92rem,min(4vw,2dvh),1.05rem);
+  }
+  .flower-menu{
+    width:100%;
+    gap:10px;
+  }
+  .flower-choice{
+    flex:0 1 calc(50% - 7px);
+    min-width:110px;
+    max-width:158px;
+  }
+}
+@media(max-height:700px){
+  .intro-box,.central-box,.final-box{
+    padding-top:20px;
+    padding-bottom:20px;
+  }
+  .bouquet-scene{
+    height:min(320px,43dvh);
+    min-height:225px;
+  }
+  .note-card{
+    padding:15px 18px;
+  }
+}
+@media(orientation:landscape) and (max-height:560px){
+  .display{font-size:clamp(1.9rem,7dvh,3rem)}
+  .flower-menu{margin-top:14px}
+  .bouquet-scene{height:225px;min-height:205px}
+  .keepsake-card{height:86dvh}
+}
+
+
+/* ===== TRANSICIÓN FLUIDA: DISTANCIA → 21 DE SEPTIEMBRE ===== */
+.distance-continue{
+  margin-top:18px;
+  border:1px solid rgba(81,246,255,.34);
+  border-radius:999px;
+  padding:11px 20px;
+  color:#eefcff;
+  background:linear-gradient(180deg,rgba(81,246,255,.055),rgba(180,92,255,.035));
+  font-weight:800;cursor:pointer;
+  box-shadow:0 0 15px rgba(81,246,255,.08);
+  opacity:0;visibility:hidden;transform:translateY(8px);
+  transition:opacity .45s ease,visibility .45s ease,transform .45s ease,box-shadow .25s ease;
+}
+.prelaunch.revealed .distance-continue{
+  opacity:1;visibility:visible;transform:none;
+  transition-delay:.48s;
+}
+.distance-continue:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 22px rgba(81,246,255,.16),0 0 34px rgba(180,92,255,.07);
+}
+.prelaunch.flowing .distance-card{
+  animation:distanceCardLeave 1.15s cubic-bezier(.4,0,.2,1) forwards;
+}
+.prelaunch.flowing .route-light{
+  animation:distanceFinalTravel .95s cubic-bezier(.2,.75,.2,1) forwards;
+}
+.prelaunch.flowing .route-line{
+  animation:routeGlow .95s ease forwards;
+}
+@keyframes distanceCardLeave{
+  0%{opacity:1;transform:scale(1);filter:blur(0)}
+  45%{opacity:1;transform:scale(.985);filter:blur(0)}
+  100%{opacity:0;transform:scale(.965);filter:blur(7px)}
+}
+@keyframes distanceFinalTravel{
+  0%{left:0;opacity:.4;transform:translate(-50%,-50%) scale(.85)}
+  15%{opacity:1}
+  100%{left:100%;opacity:1;transform:translate(-50%,-50%) scale(1.35)}
+}
+@keyframes routeGlow{
+  0%{box-shadow:0 0 14px rgba(81,246,255,.08)}
+  100%{box-shadow:0 0 20px rgba(81,246,255,.24),0 0 32px rgba(255,227,79,.15)}
+}
+.flow-curtain{
+  position:fixed;inset:0;z-index:10000;
+  display:grid;place-items:center;
+  background:
+    radial-gradient(circle at 50% 50%,rgba(255,227,79,.055),transparent 26%),
+    linear-gradient(180deg,#010208,#03050c);
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .55s ease,visibility .55s ease;
+}
+.flow-curtain.show{opacity:1;visibility:visible}
+.flow-curtain-inner{text-align:center;padding:24px}
+.flow-line{
+  font-family:Georgia,"Times New Roman",serif;
+  color:#d8d1b0;
+  font-size:clamp(1.05rem,2.4vw,1.35rem);
+  opacity:0;transform:translateY(8px);
+}
+.flow-curtain.show .flow-line{
+  animation:flowText .7s .18s forwards;
+}
+.flow-date{
+  margin-top:12px;
+  font-family:Georgia,"Times New Roman",serif;
+  color:#ffe45d;
+  font-size:clamp(2.3rem,8vw,5.4rem);
+  letter-spacing:.08em;
+  text-shadow:0 0 18px rgba(255,227,79,.28);
+  opacity:0;transform:translateY(10px) scale(.98);
+}
+.flow-curtain.show .flow-date{
+  animation:flowDate .85s .66s forwards;
+}
+@keyframes flowText{to{opacity:1;transform:none}}
+@keyframes flowDate{to{opacity:1;transform:none}}
+.flow-curtain.exit{
+  opacity:0;
+  transition:opacity .7s ease;
+}
+
+/* En móviles bajos mantiene la transición compacta */
+@media(max-height:620px){
+  .distance-continue{margin-top:10px;padding:8px 16px}
+  .flow-line{font-size:.92rem}
+  .flow-date{font-size:clamp(2rem,10dvh,3.7rem)}
+}
+
+
+/* ===== FIX DEFINITIVO: ESCENA DEL RAMO ===== */
+
+/*
+  El SVG ahora SIEMPRE cabe dentro de .bouquet-scene.
+  Antes el ancho podía mandar sobre la altura y, con overflow visible,
+  el ramo invadía los controles inferiores.
+*/
+#special{
+  display:flex;
+  align-items:stretch;
+  justify-content:center;
+  overflow-y:auto;
+  overflow-x:hidden;
+  padding-top:max(62px,env(safe-area-inset-top));
+  padding-bottom:max(78px,calc(env(safe-area-inset-bottom) + 58px));
+}
+
+#special .special-shell{
+  width:min(900px,96vw);
+  min-height:100%;
+  margin:auto;
+  padding:12px 0 18px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+
+#special .bouquet-scene{
+  flex:0 0 auto;
+  width:min(720px,94vw);
+  height:clamp(240px,44dvh,430px);
+  min-height:0;
+  margin:10px auto 16px;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+}
+
+/* El viewBox del SVG conserva la proporción automáticamente */
+#special .bouquet-art{
+  display:block;
+  width:100%;
+  height:100%;
+  max-width:620px;
+  max-height:100%;
+  overflow:visible;
+}
+
+/* Los controles ya participan en el flujo normal y no suben sobre el ramo */
+#special .special-actions{
+  position:relative;
+  z-index:4;
+  flex:0 0 auto;
+  margin:2px auto 12px;
+}
+
+#special .note-card{
+  position:relative;
+  z-index:3;
+  flex:0 0 auto;
+  margin:0 auto;
+}
+
+#special > .special-shell > .btn{
+  position:relative;
+  z-index:3;
+  flex:0 0 auto;
+  margin-top:18px;
+}
+
+/* Laptop / navegador con poca altura */
+@media(max-height:760px){
+  #special{
+    padding-top:max(48px,env(safe-area-inset-top));
+    padding-bottom:max(68px,calc(env(safe-area-inset-bottom) + 50px));
+  }
+
+  #special .special-shell{
+    justify-content:flex-start;
+    padding-top:4px;
+  }
+
+  #special .hand{
+    font-size:clamp(1.25rem,4.2dvh,2rem);
+    margin-bottom:2px;
+  }
+
+  #special .bouquet-scene{
+    height:clamp(215px,39dvh,300px);
+    margin-top:4px;
+    margin-bottom:12px;
+  }
+
+  #special .note-card{
+    padding:14px 18px;
+    line-height:1.5;
+  }
+
+  #special > .special-shell > .btn{
+    margin-top:13px;
+  }
+}
+
+/* Horizontal / pantallas realmente bajas */
+@media(orientation:landscape) and (max-height:620px){
+  #special{
+    padding-top:max(42px,env(safe-area-inset-top));
+    padding-bottom:max(62px,calc(env(safe-area-inset-bottom) + 48px));
+  }
+
+  #special .special-shell{
+    width:min(940px,97vw);
+    padding-top:0;
+  }
+
+  #special .hand{
+    font-size:1.18rem;
+  }
+
+  #special .bouquet-scene{
+    height:210px;
+    width:min(600px,84vw);
+    margin:0 auto 9px;
+  }
+
+  #special .special-actions{
+    margin-bottom:8px;
+  }
+
+  #special .mini-action{
+    padding:7px 12px;
+    font-size:.7rem;
+  }
+
+  #special .note-card{
+    width:min(660px,90vw);
+    padding:11px 16px;
+    font-size:.88rem;
+    line-height:1.4;
+  }
+
+  #special > .special-shell > .btn{
+    margin-top:10px;
+    padding:9px 17px;
+  }
+}
+
+/* Móvil vertical */
+@media(max-width:520px){
+  #special{
+    padding-left:10px;
+    padding-right:10px;
+  }
+
+  #special .special-shell{
+    width:100%;
+  }
+
+  #special .bouquet-scene{
+    width:100%;
+    height:clamp(245px,39dvh,330px);
+  }
+
+  #special .note-card{
+    width:94%;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<div class="prelaunch" id="prelaunch">
+  <div class="prelaunch-stars"></div>
+
+  <div class="distance-card">
+    <div class="distance-kicker">desde muy lejos, para ti</div>
+
+    <h1 class="distance-title">
+      Hoy hay casi <em>2,900 km entre nosotros.</em>
+    </h1>
+
+    <div class="route" id="route" role="button" tabindex="0" aria-label="Ruta entre Chicago y Ciudad Guzmán">
+      <div class="route-cities">
+        <div class="city from">
+          <span class="city-dot"></span>
+          <span class="city-name">Chicago</span>
+          <span class="city-sub">Illinois · EUA</span>
+        </div>
+
+        <div class="distance-pill">≈ 2,880 km</div>
+
+        <div class="city to">
+          <span class="city-dot"></span>
+          <span class="city-name">Ciudad Guzmán</span>
+          <span class="city-sub">Jalisco · México</span>
+        </div>
+      </div>
+
+      <div class="route-line">
+        <span class="route-light"></span>
+      </div>
+    </div>
+
+    <p class="distance-copy">
+      Tú allá y yo aquí. Dos ciudades, una frontera y muchos kilómetros.
+      <strong>Pero hay cosas a las que la distancia simplemente no les alcanza.</strong>
+    </p>
+
+    <button class="distance-action" id="distanceAction">Toca la distancia</button>
+
+    <div class="distance-reveal">
+      <div class="distance-message">
+        La distancia puede medir cuánto falta para llegar.
+        <span class="gold">
+          No puede medir cuánto pienso en ti, cuánto te extraño
+          ni todo lo que haría para hacerte llegar un detalle desde aquí.
+        </span>
+      </div>
+
+      <div class="distance-signoff">
+        Si algo mío puede cruzar estos kilómetros para encontrarte,
+        entonces la distancia nunca fue un impedimento.
+      </div>
+
+      <div class="distance-foot">
+        Guarda este instante. Lo que sigue empieza aquí.
+      </div>
+
+      <button class="distance-continue" id="distanceContinue">
+        Seguir el camino ›
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="flow-curtain" id="flowCurtain" aria-hidden="true">
+  <div class="flow-curtain-inner">
+    <div class="flow-line">La distancia nunca fue el final.</div>
+    <div class="flow-date">21 · 09 · 2026</div>
+  </div>
+</div>
+
+<div class="dev-panel" id="devPanel" aria-label="Panel de desarrollo">
+  <div class="dev-title">
+    <span>Control de Alejandro <span class="dev-badge">LOCAL</span></span>
+    <button class="dev-toggle" id="devCollapse" title="Minimizar">—</button>
+  </div>
+
+  <div class="dev-body">
+    <select class="dev-select" id="devSceneSelect"></select>
+
+    <div class="dev-grid" style="margin-top:7px">
+      <button class="dev-btn" id="devExperience">Ver experiencia</button>
+      <button class="dev-btn" id="devPrelaunch">Ver antesala</button>
+      <button class="dev-btn" id="devPrev">← Escena</button>
+      <button class="dev-btn" id="devNext">Escena →</button>
+    </div>
+
+    <div class="dev-row">
+      <button class="dev-btn warn" id="devReset">Reset local</button>
+    </div>
+
+    <div class="dev-note">
+      Solo funciona en localhost. Abre con <b>?dev=1</b> o usa <b>Ctrl + Shift + D</b>.
+    </div>
+  </div>
+</div>
+
+<div class="app">
+  <div class="progress"><i id="progressBar"></i></div>
+  <div class="fireflies" id="fireflies" aria-hidden="true"></div>
+  <div class="top-tools">
+    <button class="tool-btn" id="autoBtn" title="Avance automático" aria-label="Activar o desactivar avance automático">▶</button>
+    <button class="tool-btn" id="fullscreenBtn" title="Pantalla completa" aria-label="Pantalla completa">⛶</button>
+  </div>
+<div class="scene-nav" aria-label="Navegación">
+    <button class="scene-btn prev" id="prevScene" aria-label="Pantalla anterior">‹</button>
+    <button class="scene-btn next" id="nextScene" aria-label="Pantalla siguiente">›</button>
+  </div>
+  <div class="scene-count" id="sceneCount">01 / 08</div>
+  <div class="toast" id="toast"></div>
+
+  <section class="screen active" id="intro">
+    <div class="ambient"></div><div class="grid-glow"></div><div class="flowers-layer" data-flowers="intro"></div>
+    <div class="center intro-box neon-frame">
+      <div class="kicker">para ti</div>
+      <div class="date">21 · 09 · 2026</div>
+      <p class="sub">Hoy quería regalarte algo diferente.</p>
+      <button class="btn" data-go="transition">Entrar al jardín ›</button>
+    </div>
+  </section>
+
+  <section class="screen" id="transition">
+    <div class="ambient"></div><div class="grid-glow"></div><div class="flowers-layer" data-flowers="transition"></div>
+    <div class="center">
+      <div class="lines">
+        <p>Pensé en ti.</p>
+        <p>Y después pensé un poquito más.</p>
+        <p>Hasta terminar aquí.</p>
+      </div>
+      <button class="btn" data-go="garden">Seguir ›</button>
+    </div>
+  </section>
+
+  <section class="screen" id="garden">
+    <div class="grid-glow"></div><div class="orb"></div><div class="horizon"></div><div class="flowers-layer" data-flowers="garden"></div>
+    <div class="center">
+      <h1 class="display">Hay personas que hacen florecer lugares que antes parecían normales.</h1>
+      <div class="hand">Y tú hiciste eso conmigo.</div>
+      <button class="btn" data-go="interactive">Descubrir el jardín ›</button>
+    </div>
+  </section>
+
+  <section class="screen" id="interactive">
+    <div class="ambient"></div><div class="grid-glow"></div>
+    <div class="center interactive-shell neon-frame">
+      <div class="kicker">un pequeño jardín para ti</div>
+      <h2 class="display" style="font-size:clamp(2.2rem,6vw,4.6rem)">Toca una flor</h2>
+      <p class="sub">Cada una guarda un pedacito de lo que siento por ti.</p>
+      <div class="flower-menu" id="flowerMenu"></div>
+      <div class="flower-status" id="flowerStatus"><strong id="flowerCount">0</strong> de 5 flores descubiertas</div>
+      <button class="btn" id="interactiveNext" data-go="central" disabled>Abre una flor para continuar</button>
+    </div>
+  </section>
+
+  <section class="screen" id="central">
+    <div class="grid-glow"></div><div class="flowers-layer" data-flowers="central"></div>
+    <div class="center central-box neon-frame">
+      <h2 class="display">Podría haberte regalado flores.</h2>
+      <div class="rule"></div>
+      <p class="sub">Pero preferí hacerte un lugar donde nunca se marchitaran.</p>
+      <button class="btn" data-go="special">Hay una para ti ›</button>
+    </div>
+  </section>
+
+  <section class="screen" id="special">
+    <div class="grid-glow"></div>
+    <div class="center special-shell">
+      <div class="hand">Hay una para ti.</div>
+
+      <div class="bouquet-scene" aria-label="Ramo animado de girasoles y rosas amarillas">
+        <svg class="bouquet-art" viewBox="0 0 620 430" role="img" aria-label="Ramo de girasoles y rosas amarillas">
+          <defs>
+            <linearGradient id="stemGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#7cffad"/>
+              <stop offset="48%" stop-color="#2eaa67"/>
+              <stop offset="100%" stop-color="#0f4828"/>
+            </linearGradient>
+            <linearGradient id="leafGradient" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#82f7ad"/>
+              <stop offset="52%" stop-color="#2a9b5d"/>
+              <stop offset="100%" stop-color="#124d2b"/>
+            </linearGradient>
+            <radialGradient id="sunPetal" cx="46%" cy="28%">
+              <stop offset="0%" stop-color="#fff9af"/>
+              <stop offset="42%" stop-color="#ffe766"/>
+              <stop offset="75%" stop-color="#ffc928"/>
+              <stop offset="100%" stop-color="#d99700"/>
+            </radialGradient>
+            <radialGradient id="sunCenter" cx="42%" cy="36%">
+              <stop offset="0%" stop-color="#a96617"/>
+              <stop offset="58%" stop-color="#623008"/>
+              <stop offset="100%" stop-color="#241000"/>
+            </radialGradient>
+            <radialGradient id="rosePetal" cx="38%" cy="28%">
+              <stop offset="0%" stop-color="#fff9b8"/>
+              <stop offset="40%" stop-color="#ffe46b"/>
+              <stop offset="72%" stop-color="#f7c72f"/>
+              <stop offset="100%" stop-color="#c98b00"/>
+            </radialGradient>
+            <linearGradient id="paperGradient" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#111726"/>
+              <stop offset="55%" stop-color="#080b13"/>
+              <stop offset="100%" stop-color="#151021"/>
+            </linearGradient>
+          </defs>
+
+          <!-- tallos -->
+          <path class="stem-path" style="--d:.05s" d="M310 392 C292 328 250 269 190 204"/>
+          <path class="stem-path" style="--d:.14s" d="M310 392 C302 315 287 241 282 164"/>
+          <path class="stem-path" style="--d:.23s" d="M310 392 C318 304 331 229 338 122"/>
+          <path class="stem-path" style="--d:.32s" d="M310 392 C331 311 374 247 424 180"/>
+          <path class="stem-path" style="--d:.41s" d="M310 392 C353 330 407 286 484 236"/>
+          <path class="stem-path" style="--d:.50s" d="M310 392 C276 333 236 299 154 262"/>
+          <path class="stem-path" style="--d:.59s" d="M310 392 C327 339 360 308 406 284"/>
+
+          <!-- hojas -->
+          <path class="leaf-shape" style="--d:.72s" d="M241 286 C208 270 197 244 218 236 C240 242 252 258 241 286Z"/>
+          <path class="leaf-shape" style="--d:.82s" d="M281 252 C300 225 323 220 334 237 C323 257 306 264 281 252Z"/>
+          <path class="leaf-shape" style="--d:.92s" d="M354 276 C373 247 400 243 411 263 C398 282 380 289 354 276Z"/>
+          <path class="leaf-shape" style="--d:1.02s" d="M392 311 C415 287 440 289 447 308 C431 324 414 329 392 311Z"/>
+          <path class="leaf-shape" style="--d:1.12s" d="M228 325 C204 302 180 303 173 321 C188 337 207 341 228 325Z"/>
+          <path class="leaf-shape" style="--d:1.22s" d="M315 324 C288 307 265 314 263 334 C283 346 301 343 315 324Z"/>
+
+          <!-- rosa izquierda -->
+          <g transform="translate(168 194)">
+            <g class="bloom rose" style="--d:1.12s">
+              <ellipse cx="0" cy="-4" rx="34" ry="24" fill="url(#rosePetal)" transform="rotate(-20)"/>
+              <ellipse cx="0" cy="-4" rx="34" ry="24" fill="url(#rosePetal)" transform="rotate(20)"/>
+              <ellipse cx="-7" cy="2" rx="28" ry="22" fill="url(#rosePetal)" transform="rotate(-58)"/>
+              <ellipse cx="8" cy="1" rx="28" ry="22" fill="url(#rosePetal)" transform="rotate(58)"/>
+              <ellipse cx="0" cy="3" rx="24" ry="19" fill="url(#rosePetal)"/>
+              <ellipse cx="-4" cy="4" rx="16" ry="12" fill="#ffd94b" transform="rotate(-32)"/>
+              <ellipse cx="5" cy="3" rx="15" ry="11" fill="#f7c536" transform="rotate(34)"/>
+              <circle cx="0" cy="4" r="8" fill="#d79a09"/>
+            </g>
+          </g>
+
+          <!-- girasol medio izquierdo -->
+          <g transform="translate(279 157)">
+            <g class="bloom sunflower" style="--d:1.34s">
+              <g class="petal-soft">
+                <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#sunPetal)"/>
+                <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#sunPetal)" transform="rotate(30)"/>
+                <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#sunPetal)" transform="rotate(60)"/>
+                <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#sunPetal)" transform="rotate(90)"/>
+                <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#sunPetal)" transform="rotate(120)"/>
+                <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#sunPetal)" transform="rotate(150)"/>
+                <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#sunPetal)" transform="rotate(180)"/>
+                <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#sunPetal)" transform="rotate(210)"/>
+                <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#sunPetal)" transform="rotate(240)"/>
+                <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#sunPetal)" transform="rotate(270)"/>
+                <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#sunPetal)" transform="rotate(300)"/>
+                <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#sunPetal)" transform="rotate(330)"/>
+              </g>
+              <circle cx="0" cy="0" r="24" fill="url(#sunCenter)"/>
+              <circle cx="0" cy="0" r="15" fill="#6f390a" opacity=".68"/>
+            </g>
+          </g>
+
+          <!-- girasol central -->
+          <g transform="translate(338 112)">
+            <g class="bloom sunflower" style="--d:1.56s">
+              <g class="petal-soft">
+                <ellipse cx="0" cy="-48" rx="17" ry="36" fill="url(#sunPetal)"/>
+                <ellipse cx="0" cy="-48" rx="17" ry="36" fill="url(#sunPetal)" transform="rotate(30)"/>
+                <ellipse cx="0" cy="-48" rx="17" ry="36" fill="url(#sunPetal)" transform="rotate(60)"/>
+                <ellipse cx="0" cy="-48" rx="17" ry="36" fill="url(#sunPetal)" transform="rotate(90)"/>
+                <ellipse cx="0" cy="-48" rx="17" ry="36" fill="url(#sunPetal)" transform="rotate(120)"/>
+                <ellipse cx="0" cy="-48" rx="17" ry="36" fill="url(#sunPetal)" transform="rotate(150)"/>
+                <ellipse cx="0" cy="-48" rx="17" ry="36" fill="url(#sunPetal)" transform="rotate(180)"/>
+                <ellipse cx="0" cy="-48" rx="17" ry="36" fill="url(#sunPetal)" transform="rotate(210)"/>
+                <ellipse cx="0" cy="-48" rx="17" ry="36" fill="url(#sunPetal)" transform="rotate(240)"/>
+                <ellipse cx="0" cy="-48" rx="17" ry="36" fill="url(#sunPetal)" transform="rotate(270)"/>
+                <ellipse cx="0" cy="-48" rx="17" ry="36" fill="url(#sunPetal)" transform="rotate(300)"/>
+                <ellipse cx="0" cy="-48" rx="17" ry="36" fill="url(#sunPetal)" transform="rotate(330)"/>
+              </g>
+              <circle cx="0" cy="0" r="29" fill="url(#sunCenter)"/>
+              <circle cx="0" cy="0" r="18" fill="#5a2a05" opacity=".7"/>
+            </g>
+          </g>
+
+          <!-- rosa derecha alta -->
+          <g transform="translate(426 173)">
+            <g class="bloom rose" style="--d:1.72s">
+              <ellipse cx="0" cy="-4" rx="35" ry="25" fill="url(#rosePetal)" transform="rotate(-20)"/>
+              <ellipse cx="0" cy="-4" rx="35" ry="25" fill="url(#rosePetal)" transform="rotate(20)"/>
+              <ellipse cx="-8" cy="2" rx="29" ry="22" fill="url(#rosePetal)" transform="rotate(-58)"/>
+              <ellipse cx="8" cy="2" rx="29" ry="22" fill="url(#rosePetal)" transform="rotate(58)"/>
+              <ellipse cx="0" cy="3" rx="24" ry="19" fill="url(#rosePetal)"/>
+              <ellipse cx="-4" cy="3" rx="16" ry="12" fill="#ffe063" transform="rotate(-30)"/>
+              <ellipse cx="5" cy="2" rx="15" ry="11" fill="#f2bd26" transform="rotate(34)"/>
+              <circle cx="0" cy="4" r="8" fill="#cf8e06"/>
+            </g>
+          </g>
+
+          <!-- rosa izquierda baja -->
+          <g transform="translate(145 250)">
+            <g class="bloom rose" style="--d:1.88s">
+              <ellipse cx="0" cy="-4" rx="29" ry="21" fill="url(#rosePetal)" transform="rotate(-20)"/>
+              <ellipse cx="0" cy="-4" rx="29" ry="21" fill="url(#rosePetal)" transform="rotate(20)"/>
+              <ellipse cx="-6" cy="1" rx="23" ry="18" fill="url(#rosePetal)" transform="rotate(-58)"/>
+              <ellipse cx="6" cy="1" rx="23" ry="18" fill="url(#rosePetal)" transform="rotate(58)"/>
+              <ellipse cx="0" cy="3" rx="20" ry="15" fill="url(#rosePetal)"/>
+              <circle cx="0" cy="4" r="7" fill="#d69408"/>
+            </g>
+          </g>
+
+          <!-- girasol derecha -->
+          <g transform="translate(486 228)">
+            <g class="bloom sunflower" style="--d:2.02s">
+              <g class="petal-soft">
+                <ellipse cx="0" cy="-34" rx="12" ry="26" fill="url(#sunPetal)"/>
+                <ellipse cx="0" cy="-34" rx="12" ry="26" fill="url(#sunPetal)" transform="rotate(30)"/>
+                <ellipse cx="0" cy="-34" rx="12" ry="26" fill="url(#sunPetal)" transform="rotate(60)"/>
+                <ellipse cx="0" cy="-34" rx="12" ry="26" fill="url(#sunPetal)" transform="rotate(90)"/>
+                <ellipse cx="0" cy="-34" rx="12" ry="26" fill="url(#sunPetal)" transform="rotate(120)"/>
+                <ellipse cx="0" cy="-34" rx="12" ry="26" fill="url(#sunPetal)" transform="rotate(150)"/>
+                <ellipse cx="0" cy="-34" rx="12" ry="26" fill="url(#sunPetal)" transform="rotate(180)"/>
+                <ellipse cx="0" cy="-34" rx="12" ry="26" fill="url(#sunPetal)" transform="rotate(210)"/>
+                <ellipse cx="0" cy="-34" rx="12" ry="26" fill="url(#sunPetal)" transform="rotate(240)"/>
+                <ellipse cx="0" cy="-34" rx="12" ry="26" fill="url(#sunPetal)" transform="rotate(270)"/>
+                <ellipse cx="0" cy="-34" rx="12" ry="26" fill="url(#sunPetal)" transform="rotate(300)"/>
+                <ellipse cx="0" cy="-34" rx="12" ry="26" fill="url(#sunPetal)" transform="rotate(330)"/>
+              </g>
+              <circle cx="0" cy="0" r="21" fill="url(#sunCenter)"/>
+              <circle cx="0" cy="0" r="13" fill="#6a3407" opacity=".7"/>
+            </g>
+          </g>
+
+          <!-- rosa baja derecha -->
+          <g transform="translate(405 278)">
+            <g class="bloom rose" style="--d:2.16s">
+              <ellipse cx="0" cy="-4" rx="26" ry="19" fill="url(#rosePetal)" transform="rotate(-20)"/>
+              <ellipse cx="0" cy="-4" rx="26" ry="19" fill="url(#rosePetal)" transform="rotate(20)"/>
+              <ellipse cx="-5" cy="2" rx="21" ry="16" fill="url(#rosePetal)" transform="rotate(-58)"/>
+              <ellipse cx="6" cy="2" rx="21" ry="16" fill="url(#rosePetal)" transform="rotate(58)"/>
+              <ellipse cx="0" cy="3" rx="18" ry="14" fill="url(#rosePetal)"/>
+              <circle cx="0" cy="4" r="6" fill="#cc8a05"/>
+            </g>
+          </g>
+
+          <!-- envoltura -->
+          <g class="bouquet-wrap">
+            <path d="M236 300 L310 404 L384 300 Q349 322 310 326 Q272 322 236 300Z"
+                  fill="url(#paperGradient)" stroke="rgba(255,227,79,.28)" stroke-width="1.4"/>
+            <path d="M272 330 L310 404 L348 330" fill="none" stroke="#262e42" stroke-width="3" opacity=".8"/>
+            <path d="M268 342 Q310 362 352 342" fill="none" stroke="#ffe34f" stroke-width="3" opacity=".85"/>
+            <path d="M310 347 C287 330 268 342 274 359 C292 366 301 359 310 349Z"
+                  fill="rgba(255,227,79,.09)" stroke="#ffe34f" stroke-width="2"/>
+            <path d="M310 347 C333 330 352 342 346 359 C328 366 319 359 310 349Z"
+                  fill="rgba(255,227,79,.09)" stroke="#ffe34f" stroke-width="2"/>
+            <circle cx="310" cy="348" r="7" fill="#ffe34f"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="special-actions">
+        <button class="mini-action" id="replayBouquet">↻ Ver florecer otra vez</button>
+      </div>
+      <div class="note-card">
+        No sé cuánto tiempo dure una flor.<br>
+        Pero sí sé que quería dejarte algo que pudieras volver a abrir cuando quisieras.
+      </div>
+      <button class="btn" data-go="snapshot">Guardar este instante ›</button>
+    </div>
+  </section>
+
+
+  
+  <section class="screen" id="snapshot">
+    <div class="grid-glow"></div>
+    <div class="center snapshot-shell">
+      <div class="keepsake-card" id="keepsakeCard">
+        <div class="snapshot-flower a" data-snapshot-flower></div>
+        <div class="snapshot-flower b" data-snapshot-flower></div>
+        <div class="snapshot-flower c" data-snapshot-flower></div>
+
+        <div class="keepsake-top">
+          <div class="kicker">un instante de este jardín</div>
+          <div class="keepsake-date">21 · 09 · 2026</div>
+        </div>
+
+        <div class="keepsake-middle">
+          <div class="monogram-stage">
+            <div class="monogram-badge" id="monogramBadge" aria-label="Monograma ZA"></div>
+            <div class="monogram-caption">Zaira + Alejandro</div>
+          </div>
+          <div class="quote">Hay días que terminan.<br>Hay detalles que se quedan.</div>
+          <div class="mini-hand">Para ti, Zaira.</div>
+        </div>
+
+        <div class="keepsake-bottom">Alejandro ♡ Zaira</div>
+      </div>
+
+      <div class="snapshot-actions">
+        <button class="mini-action" id="cleanSnapshot">Vista limpia</button>
+        <button class="mini-action" id="downloadKeepsake">Guardar recuerdo</button>
+        <button class="mini-action" id="downloadMonogram">Guardar símbolo</button>
+        <button class="btn" data-go="final" style="margin-top:0">Continuar ›</button>
+      </div>
+      <div class="snapshot-note">También puedes dejar la vista limpia y conservarla manualmente si prefieres.</div>
+    </div>
+  </section>
+
+
+  <section class="screen" id="final">
+    <div class="grid-glow"></div><div class="flowers-layer" data-flowers="final"></div>
+    <div class="center final-box neon-frame">
+      <div class="kicker">para Zaira</div>
+      <h2 class="display">Para Zaira</h2>
+      <p class="sub">21 de septiembre de 2026</p>
+      <div class="rule"></div>
+      <div class="final-line">Entre tantas flores,<br>sigues siendo mi favorita.</div>
+      <div class="hand signature">Alejandro ♡</div>
+      <div class="final-reaction" id="finalReaction"></div>
+      <button class="btn restart-btn" id="restartExperience">Volver al principio ↺</button>
+      <div class="tinyend">Nos vemos en el próximo recuerdo.</div>
+    </div>
+  </section>
+
+  <div class="modal" id="flowerModal">
+    <div class="modal-card">
+      <div id="modalFlower"></div>
+      <div class="modal-title" id="modalTitle"></div>
+      <div class="modal-text" id="modalText"></div>
+      <button class="btn" id="closeModal">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+
+
+const prelaunch=document.getElementById('prelaunch');
+const distanceAction=document.getElementById('distanceAction');
+const route=document.getElementById('route');
+const distanceContinue=document.getElementById('distanceContinue');
+const flowCurtain=document.getElementById('flowCurtain');
+let flowInProgress=false;
+
+const LOCAL_DEV_HOSTS=['127.0.0.1','localhost','::1'];
+const isLocalDevHost=LOCAL_DEV_HOSTS.includes(location.hostname);
+let devMode=isLocalDevHost && new URLSearchParams(location.search).get('dev')==='1';
+if(devMode)document.documentElement.classList.add('dev-mode');
+
+function revealDistanceMessage(){
+  prelaunch.classList.add('revealed');
+  route.classList.add('activated');
+}
+
+distanceAction.addEventListener('click',revealDistanceMessage);
+route.addEventListener('click',()=>route.classList.toggle('activated'));
+route.addEventListener('keydown',e=>{
+  if(e.key==='Enter' || e.key===' '){
+    e.preventDefault();
+    revealDistanceMessage();
+  }
+});
+
+async function enterSeptemberExperience(){
+  if(flowInProgress)return;
+  flowInProgress=true;
+
+  route.classList.add('activated');
+  prelaunch.classList.add('flowing');
+
+  // Deja que la luz termine de "viajar" de Chicago a Guzmán.
+  await new Promise(r=>setTimeout(r,780));
+
+  flowCurtain.classList.add('show');
+
+  // La fecha aparece como puente entre ambos actos.
+  await new Promise(r=>setTimeout(r,1450));
+
+  prelaunch.classList.add('hidden');
+  prelaunch.classList.remove('flowing');
+
+  // Asegura que la experiencia comience desde su primera escena.
+  showScreen('intro',{manual:false});
+
+  flowCurtain.classList.add('exit');
+  await new Promise(r=>setTimeout(r,720));
+
+  flowCurtain.classList.remove('show','exit');
+  flowInProgress=false;
+}
+
+distanceContinue.addEventListener('click',enterSeptemberExperience);
+
+const app=document.querySelector('.app');
+const screens=[...document.querySelectorAll('.screen')];
+const order=['intro','transition','garden','interactive','central','special','snapshot','final'];
+const progressBar=document.getElementById('progressBar');
+const prevScene=document.getElementById('prevScene');
+const nextScene=document.getElementById('nextScene');
+const sceneCount=document.getElementById('sceneCount');
+const toast=document.getElementById('toast');
+const modal=document.getElementById('flowerModal');
+let currentIndex=0;
+let autoplay=false;
+let autoTimer=null;
+let touchStartX=0;
+let touchStartY=0;
+let regularOpened=new Set();
+let secretOpened=false;
+let bouquetChimeTimer=null;
+
+
+/* ===== HERRAMIENTAS DE DESARROLLO LOCAL ===== */
+const devPanel=document.getElementById('devPanel');
+const devSceneSelect=document.getElementById('devSceneSelect');
+
+function setDevMode(on=true){
+  if(!isLocalDevHost)return;
+  devMode=on;
+  document.documentElement.classList.toggle('dev-mode',on);
+}
+
+function fillDevScenes(){
+  if(!devSceneSelect)return;
+  devSceneSelect.innerHTML='';
+  order.forEach((id,i)=>{
+    const o=document.createElement('option');
+    o.value=id;
+    o.textContent=`${String(i+1).padStart(2,'0')} · ${id}`;
+    devSceneSelect.appendChild(o);
+  });
+  devSceneSelect.value=order[currentIndex];
+}
+
+function devShowExperience(){
+  prelaunch.classList.add('dev-bypassed');
+  showScreen('intro',{manual:false});
+}
+
+function devShowPrelaunch(){
+  prelaunch.classList.remove('dev-bypassed','hidden','flowing');
+  flowCurtain.classList.remove('show','exit');
+  flowInProgress=false;
+}
+
+function setupDevPanel(){
+  fillDevScenes();
+
+  document.getElementById('devExperience').addEventListener('click',devShowExperience);
+  document.getElementById('devPrelaunch').addEventListener('click',devShowPrelaunch);
+  document.getElementById('devPrev').addEventListener('click',()=>goRelative(-1,false));
+  document.getElementById('devNext').addEventListener('click',()=>goRelative(1,false));
+
+  document.getElementById('devReset').addEventListener('click',()=>{
+    try{localStorage.clear()}catch(e){}
+    location.reload();
+  });
+
+  devSceneSelect.addEventListener('change',()=>{
+    devShowExperience();
+    showScreen(devSceneSelect.value,{manual:false});
+  });
+
+  document.getElementById('devCollapse').addEventListener('click',()=>{
+    devPanel.classList.toggle('collapsed');
+    document.getElementById('devCollapse').textContent=
+      devPanel.classList.contains('collapsed')?'+':'—';
+  });
+}
+
+document.addEventListener('keydown',e=>{
+  if(isLocalDevHost && e.ctrlKey && e.shiftKey && e.key.toLowerCase()==='d'){
+    e.preventDefault();
+    setDevMode(!devMode);
+    if(devMode)fillDevScenes();
+  }
+});
+
+const runningFromFile = location.protocol === 'file:';
+
+function showToast(text,ms=1800){
+  toast.textContent=text;toast.classList.add('show');
+  clearTimeout(showToast.t);showToast.t=setTimeout(()=>toast.classList.remove('show'),ms);
+}
+function getActiveId(){return order[currentIndex]}
+function updateUI(){
+  progressBar.style.width=((currentIndex+1)/order.length*100)+'%';
+  sceneCount.textContent=String(currentIndex+1).padStart(2,'0')+' / '+String(order.length).padStart(2,'0');
+  prevScene.disabled=currentIndex===0;
+  nextScene.disabled=currentIndex===order.length-1 || (getActiveId()==='interactive' && regularOpened.size===0);
+  updateFinalReaction();
+  if(devMode && devSceneSelect) devSceneSelect.value=order[currentIndex];
+}
+function canLeaveInteractive(targetIndex){
+  if(getActiveId()==='interactive' && targetIndex>currentIndex && regularOpened.size===0){
+    showToast('Descubre al menos una flor antes de seguir ♡');
+    const shell=document.querySelector('.interactive-shell');shell.classList.add('complete-flash');setTimeout(()=>shell.classList.remove('complete-flash'),900);
+    return false;
+  }
+  return true;
+}
+function showScreen(id,{manual=false}={}){
+  const target=order.indexOf(id);if(target<0)return;
+  if(!canLeaveInteractive(target))return;
+  app.classList.remove('snapshot-clean');
+  screens.forEach(s=>s.classList.toggle('active',s.id===id));
+  currentIndex=target;
+  updateUI();
+  if(id==='special'){scheduleBouquetChime()}
+  scheduleAutoplay();
+  if(manual) playChime(510,.055);
+}
+function goRelative(delta,manual=true){
+  const target=Math.max(0,Math.min(order.length-1,currentIndex+delta));
+  if(target===currentIndex)return;
+  if(!canLeaveInteractive(target))return;
+  showScreen(order[target],{manual});
+}
+
+document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>showScreen(b.dataset.go,{manual:true})));
+prevScene.addEventListener('click',()=>goRelative(-1));
+nextScene.addEventListener('click',()=>goRelative(1));
+
+document.addEventListener('keydown',e=>{
+  if(modal.classList.contains('open'))return;
+  if(e.key==='ArrowLeft')goRelative(-1);
+  if(e.key==='ArrowRight')goRelative(1);
+  if(e.key==='Escape' && app.classList.contains('snapshot-clean'))app.classList.remove('snapshot-clean');
+});
+
+app.addEventListener('touchstart',e=>{touchStartX=e.changedTouches[0].clientX;touchStartY=e.changedTouches[0].clientY},{passive:true});
+app.addEventListener('touchend',e=>{
+  if(modal.classList.contains('open') || e.target.closest('button'))return;
+  const dx=e.changedTouches[0].clientX-touchStartX,dy=e.changedTouches[0].clientY-touchStartY;
+  if(Math.abs(dx)>58 && Math.abs(dx)>Math.abs(dy)*1.2)dx<0?goRelative(1):goRelative(-1);
+},{passive:true});
+
+/* Optional autoplay: only visual scenes. Interactive waits for the user. */
+const autoDurations={intro:9000,transition:7000,garden:8500,central:8500,special:10500,snapshot:9500};
+function scheduleAutoplay(){
+  clearTimeout(autoTimer);autoTimer=null;
+  if(!autoplay)return;
+  const id=getActiveId();
+  if(id==='interactive'||id==='final')return;
+  const ms=autoDurations[id]||8500;
+  autoTimer=setTimeout(()=>goRelative(1,false),ms);
+}
+const autoBtn=document.getElementById('autoBtn');
+autoBtn.addEventListener('click',()=>{
+  autoplay=!autoplay;autoBtn.classList.toggle('active',autoplay);autoBtn.textContent=autoplay?'❚❚':'▶';
+  showToast(autoplay?'Avance automático activado':'Avance automático pausado');scheduleAutoplay();playChime(620,.06);
+});
+
+/* Fullscreen */
+document.getElementById('fullscreenBtn').addEventListener('click',async()=>{
+  try{if(!document.fullscreenElement)await document.documentElement.requestFullscreen();else await document.exitFullscreen()}catch(e){showToast('El navegador no permitió pantalla completa')}
+});
+
+/* Experiencia intencionalmente silenciosa. */
+function playChime(){ /* sin audio */ }
+
+/* Fireflies */
+const fireflies=document.getElementById('fireflies');
+for(let i=0;i<30;i++){
+  const f=document.createElement('i');f.className='firefly';f.style.left=(Math.random()*100)+'%';f.style.top=(8+Math.random()*84)+'%';f.style.setProperty('--fd',(3.4+Math.random()*5.5)+'s');f.style.setProperty('--delay',(-Math.random()*6)+'s');f.style.setProperty('--fx',((-35+Math.random()*70).toFixed(0))+'px');f.style.setProperty('--fy',((-40+Math.random()*60).toFixed(0))+'px');fireflies.appendChild(f)
+}
+
+function flowerSVG(size=100){
+  let petals='';for(let i=0;i<10;i++)petals+=`<ellipse cx="50" cy="22" rx="11" ry="24" fill="url(#petal)" transform="rotate(${i*36} 50 50)"/>`;
+  return `<svg viewBox="0 0 100 100" width="${size}" height="${size}" aria-hidden="true"><defs><radialGradient id="petal" cx="50%" cy="35%"><stop offset="0%" stop-color="#fff9a8"/><stop offset="52%" stop-color="#ffe34f"/><stop offset="100%" stop-color="#f0a900"/></radialGradient><radialGradient id="core"><stop offset="0%" stop-color="#ffcf38"/><stop offset="45%" stop-color="#9d5a09"/><stop offset="100%" stop-color="#301500"/></radialGradient></defs>${petals}<circle cx="50" cy="50" r="13" fill="url(#core)"/><circle cx="50" cy="50" r="6" fill="#6e3505"/></svg>`;
+}
+function populateFlowers(layer,count,mode){
+  const el=document.querySelector(`[data-flowers="${layer}"]`);if(!el)return;
+  for(let i=0;i<count;i++){const w=document.createElement('div');w.className='flower-svg';w.innerHTML=flowerSVG(100);const s=mode==='final'?28+Math.random()*42:22+Math.random()*34;w.style.width=s+'px';w.style.height=s+'px';w.style.left=(Math.random()*102-1)+'%';const bottom=mode==='garden'?Math.random()*22-2:mode==='central'?Math.random()*18-2:mode==='final'?Math.random()*28-2:Math.random()*14-2;w.style.bottom=bottom+'%';w.style.setProperty('--dur',(2.4+Math.random()*3.5)+'s');w.style.setProperty('--rot',((-3+Math.random()*6).toFixed(1))+'deg');w.style.setProperty('--op',(0.45+Math.random()*.42).toFixed(2));el.appendChild(w)}
+}
+populateFlowers('intro',14,'intro');populateFlowers('transition',18,'transition');populateFlowers('garden',46,'garden');populateFlowers('central',20,'central');populateFlowers('final',34,'final');
+document.querySelectorAll('[data-snapshot-flower]').forEach((el,i)=>{el.innerHTML=flowerSVG(100)});
+
+/* Interactive flowers + secret */
+const flowerData=[
+  {title:'Algo que adoro de ti',text:'Tu forma de ver el mundo. Incluso en los días más simples, siempre encuentras algo que los vuelve distintos.'},
+  {title:'Un recuerdo',text:'Hay momentos que parecen pequeños mientras ocurren, pero después se vuelven de esos que uno guarda sin darse cuenta.'},
+  {title:'Algo que admiro',text:'La fuerza con la que sigues adelante, incluso cuando no todo es sencillo. Eso dice mucho de ti.'},
+  {title:'Algo pendiente',text:'Todavía nos faltan lugares, conversaciones, risas y días que todavía ni sabemos que vamos a recordar.'},
+  {title:'Una sorpresa',text:'Si llegaste hasta aquí, entonces ya sabes el secreto: esta página no es sobre flores. Es sobre ti.'}
+];
+const secretFlower={title:'Una flor escondida',text:'Sabía que ibas a encontrar esta. Hay cosas bonitas que no se anuncian; simplemente se descubren.'};
+const menu=document.getElementById('flowerMenu');
+const flowerCount=document.getElementById('flowerCount');
+const flowerStatus=document.getElementById('flowerStatus');
+const interactiveNext=document.getElementById('interactiveNext');
+function makeFlowerButton(f,i,secret=false){
+  const b=document.createElement('button');b.className='flower-choice'+(secret?' secret':'');b.dataset.index=secret?'secret':String(i);b.setAttribute('aria-label',secret?'Flor secreta':f.title);b.innerHTML=flowerSVG(82)+`<span>${secret?'···':f.title}</span>`;
+  b.addEventListener('click',()=>openFlower(f,b,i,secret));return b;
+}
+flowerData.forEach((f,i)=>menu.appendChild(makeFlowerButton(f,i,false)));
+menu.appendChild(makeFlowerButton(secretFlower,-1,true));
+
+function openFlower(f,button,index,secret){
+  menu.classList.add('focus-mode');button.classList.add('opening');playChime(secret?780:660,.085);
+  if(secret){secretOpened=true;button.classList.add('discovered')}else{regularOpened.add(index);button.classList.add('discovered')}
+  updateFlowerStatus();
+  setTimeout(()=>{document.getElementById('modalFlower').innerHTML=flowerSVG(112);document.getElementById('modalTitle').textContent=f.title;document.getElementById('modalText').textContent=f.text;modal.classList.add('open')},210);
+}
+function updateFlowerStatus(){
+  flowerCount.textContent=regularOpened.size;
+  if(regularOpened.size>0){interactiveNext.disabled=false;interactiveNext.textContent='Seguir ›';}
+  if(regularOpened.size===5){flowerStatus.innerHTML='<strong>Jardín completo ♡</strong>';interactiveNext.classList.add('complete');interactiveNext.textContent='Seguir con el jardín completo ›';flowerStatus.classList.add('complete-flash');showToast('Jardín completo ♡',2200);playChime(880,.11)}
+  updateUI();
+}
+function closeFlowerModal(){modal.classList.remove('open');setTimeout(()=>{menu.classList.remove('focus-mode');menu.querySelectorAll('.opening').forEach(x=>x.classList.remove('opening'))},230)}
+document.getElementById('closeModal').addEventListener('click',closeFlowerModal);
+modal.addEventListener('click',e=>{if(e.target===modal)closeFlowerModal()});
+
+/* Bouquet replay + completion chime */
+function restartBouquet(){
+  const special=document.getElementById('special');
+  const nodes=special.querySelectorAll('.stem-path,.leaf-shape,.bloom,.bouquet-wrap,.bouquet-art');
+  nodes.forEach(n=>{n.style.animation='none'});void special.offsetWidth;nodes.forEach(n=>{n.style.animation=''});scheduleBouquetChime();showToast('El ramo vuelve a florecer');
+}
+function scheduleBouquetChime(){clearTimeout(bouquetChimeTimer);bouquetChimeTimer=setTimeout(()=>{if(getActiveId()==='special')playChime(920,.14)},2850)}
+document.getElementById('replayBouquet').addEventListener('click',()=>{restartBouquet();playChime(540,.06)});
+
+
+/* Portrait keepsake clean view + downloadable memory */
+function getMonogramSVG(){
+  return `
+  <svg viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Monograma ZA">
+    <defs>
+      <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#b45cff"/>
+        <stop offset="52%" stop-color="#51f6ff"/>
+        <stop offset="100%" stop-color="#ffe34f"/>
+      </linearGradient>
+      <radialGradient id="coreGlow" cx="50%" cy="42%">
+        <stop offset="0%" stop-color="rgba(255,227,79,.25)"/>
+        <stop offset="100%" stop-color="rgba(255,227,79,0)"/>
+      </radialGradient>
+    </defs>
+    <circle cx="180" cy="180" r="146" fill="rgba(5,8,18,.55)" stroke="url(#ringGrad)" stroke-width="4"/>
+    <circle cx="180" cy="180" r="118" fill="rgba(255,255,255,.015)" stroke="rgba(255,227,79,.16)" stroke-width="1.5"/>
+    <path d="M115 278 C153 301 209 301 247 277" stroke="url(#ringGrad)" stroke-width="3.2" fill="none" stroke-linecap="round" opacity=".8"/>
+    <text x="144" y="208" text-anchor="middle" font-family="Georgia, Times New Roman, serif" font-size="178" font-style="italic" font-weight="700" fill="#fff6bd" stroke="#ffe34f" stroke-width="1.7" paint-order="stroke fill">Z</text>
+    <text x="213" y="222" text-anchor="middle" font-family="Georgia, Times New Roman, serif" font-size="162" font-style="italic" font-weight="700" fill="#eefcff" stroke="#51f6ff" stroke-width="1.4" paint-order="stroke fill">A</text>
+    <text x="180" y="300" text-anchor="middle" font-family="Georgia, Times New Roman, serif" font-size="18" letter-spacing="4" fill="#ffe96d">21 · 09 · 2026</text>
+  </svg>`;
+}
+const monogramBadge=document.getElementById('monogramBadge');
+if(monogramBadge) monogramBadge.innerHTML=getMonogramSVG();
+
+document.getElementById('cleanSnapshot').addEventListener('click',()=>{app.classList.add('snapshot-clean');showToast('Toca la imagen para volver a los controles',1400)});
+document.getElementById('keepsakeCard').addEventListener('click',()=>{if(app.classList.contains('snapshot-clean'))app.classList.remove('snapshot-clean')});
+
+function makePosterSVG(){
+  return `
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920">
+    <defs>
+      <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#02040b"/>
+        <stop offset="54%" stop-color="#09111c"/>
+        <stop offset="100%" stop-color="#03040a"/>
+      </linearGradient>
+      <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#b45cff"/>
+        <stop offset="52%" stop-color="#51f6ff"/>
+        <stop offset="100%" stop-color="#ffe34f"/>
+      </linearGradient>
+      <radialGradient id="glowA" cx="50%" cy="22%">
+        <stop offset="0%" stop-color="rgba(255,227,79,.18)"/>
+        <stop offset="100%" stop-color="rgba(255,227,79,0)"/>
+      </radialGradient>
+      <radialGradient id="flowerPetal" cx="50%" cy="35%">
+        <stop offset="0%" stop-color="#fff9a8"/>
+        <stop offset="52%" stop-color="#ffe34f"/>
+        <stop offset="100%" stop-color="#f0a900"/>
+      </radialGradient>
+      <radialGradient id="flowerCore">
+        <stop offset="0%" stop-color="#ffcf38"/>
+        <stop offset="45%" stop-color="#9d5a09"/>
+        <stop offset="100%" stop-color="#301500"/>
+      </radialGradient>
+    </defs>
+
+    <rect width="1080" height="1920" fill="url(#bgGrad)"/>
+    <rect width="1080" height="1920" fill="url(#glowA)"/>
+    <g opacity=".1">
+      <path d="M0 180 H1080 M0 360 H1080 M0 540 H1080 M0 720 H1080 M0 900 H1080 M0 1080 H1080 M0 1260 H1080 M0 1440 H1080 M0 1620 H1080" stroke="#51f6ff"/>
+      <path d="M180 0 V1920 M360 0 V1920 M540 0 V1920 M720 0 V1920 M900 0 V1920" stroke="#b45cff"/>
+    </g>
+
+    <g transform="translate(95 1320) scale(1.0)">
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)"/>
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)" transform="rotate(30)"/>
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)" transform="rotate(60)"/>
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)" transform="rotate(90)"/>
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)" transform="rotate(120)"/>
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)" transform="rotate(150)"/>
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)" transform="rotate(180)"/>
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)" transform="rotate(210)"/>
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)" transform="rotate(240)"/>
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)" transform="rotate(270)"/>
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)" transform="rotate(300)"/>
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)" transform="rotate(330)"/>
+      <circle cx="0" cy="0" r="13" fill="url(#flowerCore)"/>
+    </g>
+    <g transform="translate(975 420) scale(.84) rotate(18)">
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)"/>
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)" transform="rotate(30)"/>
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)" transform="rotate(60)"/>
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)" transform="rotate(90)"/>
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)" transform="rotate(120)"/>
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)" transform="rotate(150)"/>
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)" transform="rotate(180)"/>
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)" transform="rotate(210)"/>
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)" transform="rotate(240)"/>
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)" transform="rotate(270)"/>
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)" transform="rotate(300)"/>
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)" transform="rotate(330)"/>
+      <circle cx="0" cy="0" r="13" fill="url(#flowerCore)"/>
+    </g>
+    <g transform="translate(842 1746) scale(1.18) rotate(-12)">
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)"/>
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)" transform="rotate(30)"/>
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)" transform="rotate(60)"/>
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)" transform="rotate(90)"/>
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)" transform="rotate(120)"/>
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)" transform="rotate(150)"/>
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)" transform="rotate(180)"/>
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)" transform="rotate(210)"/>
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)" transform="rotate(240)"/>
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)" transform="rotate(270)"/>
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)" transform="rotate(300)"/>
+      <ellipse cx="0" cy="-39" rx="14" ry="30" fill="url(#flowerPetal)" transform="rotate(330)"/>
+      <circle cx="0" cy="0" r="13" fill="url(#flowerCore)"/>
+    </g>
+
+    <text x="540" y="170" text-anchor="middle" fill="#51f6ff" font-family="Arial, sans-serif" font-size="32" letter-spacing="12">UN INSTANTE DE ESTE JARDÍN</text>
+    <text x="540" y="248" text-anchor="middle" fill="#ffe96d" font-family="Georgia, serif" font-size="68" letter-spacing="12">21 · 09 · 2026</text>
+
+    <g transform="translate(540 710)">
+      <circle cx="0" cy="0" r="228" fill="rgba(5,8,18,.55)" stroke="url(#ringGrad)" stroke-width="5"/>
+      <circle cx="0" cy="0" r="182" fill="rgba(255,255,255,.015)" stroke="rgba(255,227,79,.18)" stroke-width="2"/>
+      <path d="M-108 134 C-42 170 48 170 110 132" stroke="url(#ringGrad)" stroke-width="5" fill="none" stroke-linecap="round" opacity=".8"/>
+      <text x="-52" y="32" text-anchor="middle" font-family="Georgia, Times New Roman, serif" font-size="260" font-style="italic" font-weight="700" fill="#fff6bd" stroke="#ffe34f" stroke-width="2.2" paint-order="stroke fill">Z</text>
+      <text x="52" y="52" text-anchor="middle" font-family="Georgia, Times New Roman, serif" font-size="238" font-style="italic" font-weight="700" fill="#eefcff" stroke="#51f6ff" stroke-width="1.8" paint-order="stroke fill">A</text>
+      <text x="0" y="168" text-anchor="middle" font-family="Georgia, serif" font-size="28" letter-spacing="7" fill="#ffe96d">Zaira + Alejandro</text>
+    </g>
+
+    <text x="540" y="1228" text-anchor="middle" fill="#fff9df" font-family="Georgia, serif" font-size="72">Hay días que terminan.</text>
+    <text x="540" y="1318" text-anchor="middle" fill="#fff9df" font-family="Georgia, serif" font-size="72">Hay detalles que se quedan.</text>
+    <text x="540" y="1438" text-anchor="middle" fill="#ffe34f" font-family="Brush Script MT, Segoe Script, cursive" font-size="74">Para ti, Zaira.</text>
+    <text x="540" y="1688" text-anchor="middle" fill="#bcc5d5" font-family="Georgia, serif" font-size="34" letter-spacing="3">Alejandro ♡ Zaira</text>
+  </svg>`;
+}
+function makeMonogramOnlySVG(){
+  return `
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1600" width="1600" height="1600">
+    <defs>
+      <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#b45cff"/>
+        <stop offset="52%" stop-color="#51f6ff"/>
+        <stop offset="100%" stop-color="#ffe34f"/>
+      </linearGradient>
+    </defs>
+    <rect width="1600" height="1600" fill="#03040a"/>
+    <circle cx="800" cy="800" r="620" fill="rgba(5,8,18,.66)" stroke="url(#ringGrad)" stroke-width="14"/>
+    <circle cx="800" cy="800" r="500" fill="rgba(255,255,255,.02)" stroke="rgba(255,227,79,.18)" stroke-width="5"/>
+    <path d="M520 1170 C650 1242 944 1242 1082 1168" stroke="url(#ringGrad)" stroke-width="14" fill="none" stroke-linecap="round" opacity=".82"/>
+    <text x="616" y="910" text-anchor="middle" font-family="Georgia, Times New Roman, serif" font-size="820" font-style="italic" font-weight="700" fill="#fff6bd" stroke="#ffe34f" stroke-width="8" paint-order="stroke fill">Z</text>
+    <text x="1008" y="972" text-anchor="middle" font-family="Georgia, Times New Roman, serif" font-size="760" font-style="italic" font-weight="700" fill="#eefcff" stroke="#51f6ff" stroke-width="7" paint-order="stroke fill">A</text>
+    <text x="800" y="1238" text-anchor="middle" font-family="Georgia, serif" font-size="68" letter-spacing="16" fill="#ffe96d">21 · 09 · 2026</text>
+  </svg>`;
+}
+async function downloadSVGAsPNG(svgMarkup, filename, width, height){
+  const blob = new Blob([svgMarkup], {type:'image/svg+xml;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const img = new Image();
+  return new Promise((resolve,reject)=>{
+    img.onload = () => {
+      try{
+        const canvas = document.createElement('canvas');
+        canvas.width = width; canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img,0,0,width,height);
+        URL.revokeObjectURL(url);
+        canvas.toBlob((pngBlob)=>{
+          if(!pngBlob){reject(new Error('png')); return;}
+          const dl = URL.createObjectURL(pngBlob);
+          const a = document.createElement('a');
+          a.href = dl;
+          a.download = filename;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          setTimeout(()=>URL.revokeObjectURL(dl),2500);
+          resolve();
+        }, 'image/png');
+      }catch(err){ reject(err); }
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('svg-render')); };
+    img.src = url;
+  });
+}
+document.getElementById('downloadKeepsake').addEventListener('click', async()=>{
+  try{
+    await downloadSVGAsPNG(makePosterSVG(),'recuerdo-zaira-21-09-2026.png',1080,1920);
+    showToast('Recuerdo guardado ♡',1800);
+    playChime(760,.09);
+  }catch(e){
+    showToast('No se pudo generar la imagen');
+  }
+});
+document.getElementById('downloadMonogram').addEventListener('click', async()=>{
+  try{
+    await downloadSVGAsPNG(makeMonogramOnlySVG(),'monograma-za.png',1600,1600);
+    showToast('Símbolo guardado ♡',1800);
+    playChime(820,.09);
+  }catch(e){
+    showToast('No se pudo generar el símbolo');
+  }
+});
+
+
+function updateFinalReaction(){
+  const el=document.getElementById('finalReaction');if(!el)return;
+  if(regularOpened.size===5 && secretOpened)el.textContent='Encontraste todo lo que quería decirte… incluso lo que escondí.';
+  else if(regularOpened.size===5)el.textContent='Encontraste todo lo que quería decirte.';
+  else if(regularOpened.size>0)el.textContent='Y todavía quedó algo aquí para cuando quieras volver.';
+  else el.textContent='Este jardín puede esperar a que vuelvas cuando quieras.';
+}
+document.getElementById('restartExperience').addEventListener('click',()=>{showScreen('intro',{manual:true})});
+
+updateUI();
+if(devMode){setupDevPanel();}
+</script>
+</body>
+</html>
