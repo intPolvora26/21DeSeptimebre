@@ -1113,6 +1113,343 @@ button{font:inherit}
   }
 }
 
+
+/* ============================================================
+   CAPA ÚNICA — RELOJES, JARDÍN VIVO, CONSTELACIÓN Y MEMORIA
+   ============================================================ */
+
+/* Horarios Chicago / Ciudad Guzmán */
+.city-time{
+  display:block;
+  margin-top:1px;
+  font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+  font-size:clamp(.66rem,1.4vw,.8rem);
+  letter-spacing:.06em;
+  color:#dce4f0;
+  opacity:.88;
+}
+.time-bridge{
+  margin:10px auto 0;
+  min-height:1.2em;
+  color:#8d9aaf;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(.78rem,1.55vw,.92rem);
+  font-style:italic;
+}
+.return-note{
+  max-width:560px;
+  margin:0 auto 10px;
+  padding:7px 13px;
+  border:1px solid rgba(81,246,255,.15);
+  border-radius:999px;
+  color:#a9b7c9;
+  background:rgba(81,246,255,.025);
+  font-size:.68rem;
+  letter-spacing:.06em;
+  opacity:0;
+  transform:translateY(-5px);
+  transition:.5s ease;
+}
+.return-note.visible{opacity:1;transform:none}
+
+/* Jardín que crece de acuerdo con lo que ella descubre */
+.living-garden{
+  position:absolute;
+  z-index:2;
+  left:0;right:0;bottom:0;
+  height:min(31dvh,260px);
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-evenly;
+  padding:0 clamp(14px,4vw,54px) 12px;
+  pointer-events:none;
+  overflow:hidden;
+  mask-image:linear-gradient(to top,#000 72%,transparent 100%);
+}
+.memory-plant{
+  position:relative;
+  flex:0 1 90px;
+  width:clamp(50px,9vw,90px);
+  height:clamp(98px,18dvh,175px);
+  opacity:.055;
+  transform:translateY(28px) scale(.48);
+  transform-origin:50% 100%;
+  filter:saturate(.25);
+  transition:
+    opacity .85s ease,
+    transform 1s cubic-bezier(.2,.85,.2,1.06),
+    filter .8s ease;
+}
+.memory-plant:nth-child(2),
+.memory-plant:nth-child(5){height:clamp(80px,15dvh,145px)}
+.memory-plant:nth-child(3){height:clamp(112px,21dvh,195px)}
+.memory-plant.bloomed{
+  opacity:.78;
+  transform:translateY(0) scale(1);
+  filter:saturate(1);
+}
+.memory-plant.secret-plant.bloomed{
+  opacity:.88;
+  filter:hue-rotate(18deg) drop-shadow(0 0 10px rgba(81,246,255,.18));
+}
+.memory-stem{
+  position:absolute;
+  left:50%;bottom:0;
+  width:4px;height:68%;
+  border-radius:999px;
+  transform:translateX(-50%);
+  background:linear-gradient(#46ce82,#1a6f42);
+  box-shadow:0 0 7px rgba(70,206,130,.12);
+}
+.memory-leaf{
+  position:absolute;
+  width:28%;height:18%;
+  bottom:27%;
+  background:linear-gradient(135deg,#5cdb8e,#1f7b49);
+  border-radius:100% 0 100% 0;
+  opacity:.8;
+}
+.memory-leaf.l{left:24%;transform:rotate(-28deg)}
+.memory-leaf.r{right:22%;transform:scaleX(-1) rotate(-28deg)}
+.memory-head{
+  position:absolute;
+  left:50%;top:0;
+  width:72%;
+  aspect-ratio:1;
+  transform:translateX(-50%) scale(.5) rotate(-8deg);
+  opacity:.22;
+  transition:transform 1.05s .12s cubic-bezier(.15,.9,.25,1.15),opacity .8s .12s ease;
+}
+.memory-head svg{display:block;width:100%;height:100%}
+.memory-plant.bloomed .memory-head{
+  transform:translateX(-50%) scale(1) rotate(0);
+  opacity:1;
+}
+
+/* pequeño sello que queda después del mensaje irrepetible */
+.memory-seal{
+  position:absolute;
+  z-index:6;
+  top:14px;right:16px;
+  width:34px;height:34px;
+  display:grid;place-items:center;
+  border-radius:50%;
+  border:1px solid rgba(255,227,79,.24);
+  color:#ffe96d;
+  background:rgba(3,5,11,.5);
+  box-shadow:0 0 14px rgba(255,227,79,.08);
+  opacity:0;transform:scale(.55);
+  pointer-events:none;
+  transition:.6s cubic-bezier(.2,.85,.25,1.15);
+}
+.memory-seal.visible{opacity:.88;transform:scale(1)}
+.memory-seal:after{
+  content:"";
+  position:absolute;inset:-5px;
+  border:1px solid rgba(81,246,255,.08);
+  border-radius:50%;
+}
+
+/* ramo dependiente de las flores encontradas */
+.bloom.unearned,
+.stem-path.unearned{
+  display:none!important;
+}
+.bouquet-progress{
+  min-height:1.4em;
+  margin:0 auto 10px;
+  color:#97a4b8;
+  font-size:.68rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.bouquet-progress strong{
+  color:#ffe96d;
+  font-weight:700;
+}
+
+/* Constelación ZA */
+.constellation-overlay{
+  position:fixed;inset:0;z-index:10050;
+  display:grid;place-items:center;
+  padding:22px;
+  background:
+    radial-gradient(circle at 50% 48%,rgba(81,246,255,.055),transparent 24%),
+    radial-gradient(circle at 50% 50%,rgba(180,92,255,.045),transparent 42%),
+    rgba(1,2,7,.96);
+  opacity:0;visibility:hidden;
+  transition:opacity .65s ease,visibility .65s ease;
+  cursor:pointer;
+}
+.constellation-overlay.show{opacity:1;visibility:visible}
+.constellation-card{
+  width:min(680px,94vw);
+  text-align:center;
+}
+.constellation-kicker{
+  color:#9eabc0;
+  font-size:.67rem;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+}
+.constellation-title{
+  margin:10px auto 2px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(1.65rem,4.5vw,3.1rem);
+  font-weight:400;
+  color:#fff9df;
+}
+.constellation-mark{
+  display:block;
+  width:min(560px,88vw);
+  height:auto;
+  margin:6px auto 2px;
+  overflow:visible;
+}
+.c-line{
+  fill:none;
+  stroke:url(#constellationGradient);
+  stroke-width:2.3;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-dasharray:620;
+  stroke-dashoffset:620;
+  filter:drop-shadow(0 0 6px rgba(81,246,255,.28));
+}
+.constellation-overlay.show .c-line{
+  animation:drawConstellation 1.8s .5s ease forwards;
+}
+.c-star{
+  fill:#fff6b3;
+  opacity:0;
+  filter:drop-shadow(0 0 6px rgba(255,227,79,.9));
+}
+.constellation-overlay.show .c-star{
+  animation:starAppear .55s forwards;
+  animation-delay:var(--sd);
+}
+.constellation-caption{
+  max-width:590px;
+  margin:0 auto;
+  color:#c7cfdb;
+  font-family:Georgia,serif;
+  font-size:clamp(.93rem,2vw,1.08rem);
+  line-height:1.55;
+}
+.constellation-hint{
+  margin-top:17px;
+  color:#637086;
+  font-size:.62rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+@keyframes drawConstellation{to{stroke-dashoffset:0}}
+@keyframes starAppear{
+  0%{opacity:0;transform:scale(.2);transform-origin:center}
+  70%{opacity:1;transform:scale(1.35)}
+  100%{opacity:1;transform:scale(1)}
+}
+
+/* Mensaje que aparece una sola vez */
+.once-overlay{
+  position:fixed;inset:0;z-index:10060;
+  display:grid;place-items:center;
+  padding:22px;
+  background:
+    radial-gradient(circle at 50% 40%,rgba(255,227,79,.06),transparent 26%),
+    rgba(1,2,7,.965);
+  opacity:0;visibility:hidden;
+  transition:opacity .65s ease,visibility .65s ease;
+}
+.once-overlay.show{opacity:1;visibility:visible}
+.once-card{
+  width:min(650px,94vw);
+  padding:clamp(25px,5vw,46px);
+  border-radius:28px;
+  border:1px solid rgba(255,227,79,.22);
+  background:linear-gradient(180deg,rgba(8,11,20,.88),rgba(3,5,10,.94));
+  box-shadow:0 0 34px rgba(255,227,79,.055);
+  text-align:center;
+}
+.once-kicker{
+  color:#8f9cb0;
+  font-size:.65rem;
+  letter-spacing:.23em;
+  text-transform:uppercase;
+}
+.once-title{
+  margin:12px auto 18px;
+  font-family:Georgia,serif;
+  font-size:clamp(1.55rem,4vw,2.7rem);
+  font-weight:400;
+  color:#fff7d4;
+}
+.once-message{
+  font-family:Georgia,serif;
+  font-size:clamp(1.02rem,2.45vw,1.3rem);
+  line-height:1.7;
+  color:#d8dbe2;
+}
+.once-message strong{
+  color:#ffe45d;
+  font-weight:400;
+  text-shadow:0 0 12px rgba(255,227,79,.17);
+}
+.once-close{
+  margin-top:22px;
+  border:1px solid rgba(255,227,79,.34);
+  border-radius:999px;
+  padding:10px 18px;
+  color:#fff4c2;
+  background:rgba(255,227,79,.035);
+  cursor:pointer;font-weight:800;
+}
+
+/* cierre circular con la distancia */
+.final-journey{
+  margin:20px auto 0;
+  max-width:650px;
+  font-family:Georgia,"Times New Roman",serif;
+  color:#aeb8c8;
+  font-size:clamp(.9rem,1.9vw,1.05rem);
+  line-height:1.6;
+}
+.final-route{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:14px auto 0;
+  color:#748299;
+  font-size:.66rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+.final-route .route-dot{color:#ffe45d}
+.final-route .route-arrow{color:#51f6ff}
+
+/* responsive additions */
+@media(max-width:600px){
+  .return-note{font-size:.61rem;border-radius:14px}
+  .city-time{font-size:.62rem}
+  .time-bridge{font-size:.76rem}
+  .living-garden{
+    height:min(25dvh,190px);
+    padding-left:4px;padding-right:4px;
+  }
+  .memory-plant{width:52px;flex-basis:52px}
+  .memory-seal{top:9px;right:9px;width:30px;height:30px}
+}
+@media(max-height:620px){
+  .living-garden{height:145px}
+  .constellation-mark{width:min(410px,75vw)}
+  .constellation-title{font-size:1.45rem}
+  .once-card{padding:20px}
+  .once-title{margin-bottom:10px;font-size:1.5rem}
+  .once-message{font-size:.91rem;line-height:1.45}
+}
+
 </style>
 </head>
 <body>
@@ -1122,6 +1459,7 @@ button{font:inherit}
 
   <div class="distance-card">
     <div class="distance-kicker">desde muy lejos, para ti</div>
+    <div class="return-note" id="returnNote"></div>
 
     <h1 class="distance-title">
       Hoy hay casi <em>2,900 km entre nosotros.</em>
@@ -1133,6 +1471,7 @@ button{font:inherit}
           <span class="city-dot"></span>
           <span class="city-name">Chicago</span>
           <span class="city-sub">Illinois · EUA</span>
+          <span class="city-time" id="chicagoTime">--:--</span>
         </div>
 
         <div class="distance-pill">≈ 2,880 km</div>
@@ -1141,12 +1480,14 @@ button{font:inherit}
           <span class="city-dot"></span>
           <span class="city-name">Ciudad Guzmán</span>
           <span class="city-sub">Jalisco · México</span>
+          <span class="city-time" id="guzmanTime">--:--</span>
         </div>
       </div>
 
       <div class="route-line">
         <span class="route-light"></span>
       </div>
+      <div class="time-bridge">Dos relojes distintos. El mismo pensamiento.</div>
     </div>
 
     <p class="distance-copy">
@@ -1185,6 +1526,54 @@ button{font:inherit}
   <div class="flow-curtain-inner">
     <div class="flow-line">La distancia nunca fue el final.</div>
     <div class="flow-date">21 · 09 · 2026</div>
+  </div>
+</div>
+
+
+<div class="constellation-overlay" id="constellationOverlay" aria-hidden="true">
+  <div class="constellation-card">
+    <div class="constellation-kicker">una flor que escondía algo más</div>
+    <h2 class="constellation-title">Hay cosas que encuentran la forma de conectarse.</h2>
+
+    <svg class="constellation-mark" viewBox="0 0 620 360" aria-label="Constelación ZA">
+      <defs>
+        <linearGradient id="constellationGradient" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#51f6ff"/>
+          <stop offset="52%" stop-color="#fff6b0"/>
+          <stop offset="100%" stop-color="#ffe34f"/>
+        </linearGradient>
+      </defs>
+
+      <path class="c-line" d="M70 82 H250 L72 278 H252"/>
+      <path class="c-line" d="M310 278 L398 82 L488 278 M345 198 H454"/>
+
+      <circle class="c-star" style="--sd:.30s" cx="70" cy="82" r="5"/>
+      <circle class="c-star" style="--sd:.52s" cx="250" cy="82" r="4"/>
+      <circle class="c-star" style="--sd:.78s" cx="72" cy="278" r="5"/>
+      <circle class="c-star" style="--sd:1.02s" cx="252" cy="278" r="4"/>
+      <circle class="c-star" style="--sd:1.18s" cx="310" cy="278" r="4"/>
+      <circle class="c-star" style="--sd:1.38s" cx="398" cy="82" r="6"/>
+      <circle class="c-star" style="--sd:1.58s" cx="488" cy="278" r="5"/>
+      <circle class="c-star" style="--sd:1.76s" cx="345" cy="198" r="4"/>
+      <circle class="c-star" style="--sd:1.92s" cx="454" cy="198" r="4"/>
+    </svg>
+
+    <div class="constellation-caption">
+      Incluso desde aquí, sigo encontrando formas de llegar a ti.
+    </div>
+    <div class="constellation-hint">Toca para volver al jardín</div>
+  </div>
+</div>
+
+<div class="once-overlay" id="onceOverlay" aria-hidden="true">
+  <div class="once-card">
+    <div class="once-kicker">solo esta vez</div>
+    <h2 class="once-title">Hay algo que esta página solo te va a decir una vez.</h2>
+    <div class="once-message">
+      No importa si estoy a 120 km, a 2,880 o al otro lado de una frontera.
+      <strong>Si eres tú, siempre voy a buscar la manera de estar.</strong>
+    </div>
+    <button class="once-close" id="onceClose">Lo guardo ♡</button>
   </div>
 </div>
 
@@ -1251,7 +1640,7 @@ button{font:inherit}
   </section>
 
   <section class="screen" id="garden">
-    <div class="grid-glow"></div><div class="orb"></div><div class="horizon"></div><div class="flowers-layer" data-flowers="garden"></div>
+    <div class="grid-glow"></div><div class="orb"></div><div class="horizon"></div><div class="flowers-layer" data-flowers="garden"></div><div class="living-garden" data-live-garden></div>
     <div class="center">
       <h1 class="display">Hay personas que hacen florecer lugares que antes parecían normales.</h1>
       <div class="hand">Y tú hiciste eso conmigo.</div>
@@ -1260,8 +1649,9 @@ button{font:inherit}
   </section>
 
   <section class="screen" id="interactive">
-    <div class="ambient"></div><div class="grid-glow"></div>
+    <div class="ambient"></div><div class="grid-glow"></div><div class="living-garden" data-live-garden></div>
     <div class="center interactive-shell neon-frame">
+      <div class="memory-seal" id="memorySeal" title="Un recuerdo que se quedó">✦</div>
       <div class="kicker">un pequeño jardín para ti</div>
       <h2 class="display" style="font-size:clamp(2.2rem,6vw,4.6rem)">Toca una flor</h2>
       <p class="sub">Cada una guarda un pedacito de lo que siento por ti.</p>
@@ -1272,7 +1662,7 @@ button{font:inherit}
   </section>
 
   <section class="screen" id="central">
-    <div class="grid-glow"></div><div class="flowers-layer" data-flowers="central"></div>
+    <div class="grid-glow"></div><div class="flowers-layer" data-flowers="central"></div><div class="living-garden" data-live-garden></div>
     <div class="center central-box neon-frame">
       <h2 class="display">Podría haberte regalado flores.</h2>
       <div class="rule"></div>
@@ -1476,6 +1866,7 @@ button{font:inherit}
       <div class="special-actions">
         <button class="mini-action" id="replayBouquet">↻ Ver florecer otra vez</button>
       </div>
+      <div class="bouquet-progress" id="bouquetProgress"></div>
       <div class="note-card">
         No sé cuánto tiempo dure una flor.<br>
         Pero sí sé que quería dejarte algo que pudieras volver a abrir cuando quisieras.
@@ -1523,12 +1914,21 @@ button{font:inherit}
 
 
   <section class="screen" id="final">
-    <div class="grid-glow"></div><div class="flowers-layer" data-flowers="final"></div>
+    <div class="grid-glow"></div><div class="flowers-layer" data-flowers="final"></div><div class="living-garden" data-live-garden></div>
     <div class="center final-box neon-frame">
       <div class="kicker">para Zaira</div>
       <h2 class="display">Para Zaira</h2>
       <p class="sub">21 de septiembre de 2026</p>
       <div class="rule"></div>
+      <div class="final-journey">
+        Empezamos esta noche con casi 2,900 km entre nosotros.<br>
+        Y terminamos aquí, en un lugar donde la distancia ya no importa.
+      </div>
+      <div class="final-route">
+        <span>Chicago</span><span class="route-arrow">→</span>
+        <span class="route-dot">2,880 km</span><span class="route-arrow">→</span>
+        <span>Ciudad Guzmán</span>
+      </div>
       <div class="final-line">Entre tantas flores,<br>sigues siendo mi favorita.</div>
       <div class="hand signature">Alejandro ♡</div>
       <div class="final-reaction" id="finalReaction"></div>
@@ -1561,6 +1961,50 @@ const LOCAL_DEV_HOSTS=['127.0.0.1','localhost','::1'];
 const isLocalDevHost=LOCAL_DEV_HOSTS.includes(location.hostname);
 let devMode=isLocalDevHost && new URLSearchParams(location.search).get('dev')==='1';
 if(devMode)document.documentElement.classList.add('dev-mode');
+
+
+/* Horarios reales de ambos lugares */
+const chicagoTime=document.getElementById('chicagoTime');
+const guzmanTime=document.getElementById('guzmanTime');
+const returnNote=document.getElementById('returnNote');
+
+function formatCityTime(timeZone){
+  try{
+    return new Intl.DateTimeFormat('es-MX',{
+      timeZone,
+      hour:'numeric',
+      minute:'2-digit',
+      hour12:true
+    }).format(new Date());
+  }catch(e){
+    return '--:--';
+  }
+}
+function updateCityClocks(){
+  chicagoTime.textContent=formatCityTime('America/Chicago');
+  guzmanTime.textContent=formatCityTime('America/Mexico_City');
+}
+updateCityClocks();
+setInterval(updateCityClocks,30000);
+
+/* Regreso a la página sin guardar timestamps ni datos personales */
+const VISIT_KEY='zairaGardenVisitsV3';
+if(!devMode){
+  let visits=0;
+  try{visits=Number(localStorage.getItem(VISIT_KEY)||0)+1;localStorage.setItem(VISIT_KEY,String(visits))}catch(e){}
+  if(visits>1){
+    let hasProgress=false;
+    try{
+      const saved=JSON.parse(localStorage.getItem('zairaGardenStateV3')||'{}');
+      hasProgress=Array.isArray(saved.regular)&&saved.regular.length>0;
+    }catch(e){}
+    returnNote.textContent=hasProgress
+      ? 'Volviste. Tu jardín sigue exactamente donde lo dejaste.'
+      : 'Volviste. El camino sigue aquí.';
+    returnNote.classList.add('visible');
+  }
+}
+
 
 function revealDistanceMessage(){
   prelaunch.classList.add('revealed');
@@ -1620,9 +2064,36 @@ let autoplay=false;
 let autoTimer=null;
 let touchStartX=0;
 let touchStartY=0;
-let regularOpened=new Set();
-let secretOpened=false;
+const STATE_KEY='zairaGardenStateV3';
+let persistedState={regular:[],secret:false,onceMessageSeen:false,constellationSeen:false};
+try{
+  const parsed=JSON.parse(localStorage.getItem(STATE_KEY)||'{}');
+  persistedState={
+    regular:Array.isArray(parsed.regular)?parsed.regular.filter(x=>Number.isInteger(x)&&x>=0&&x<5):[],
+    secret:!!parsed.secret,
+    onceMessageSeen:!!parsed.onceMessageSeen,
+    constellationSeen:!!parsed.constellationSeen
+  };
+}catch(e){}
+
+let regularOpened=new Set(persistedState.regular);
+let secretOpened=persistedState.secret;
+let onceMessageSeen=persistedState.onceMessageSeen;
+let constellationSeen=persistedState.constellationSeen;
+let pendingOnceMessage=false;
+let pendingConstellation=false;
 let bouquetChimeTimer=null;
+
+function saveGardenState(){
+  try{
+    localStorage.setItem(STATE_KEY,JSON.stringify({
+      regular:[...regularOpened].sort((a,b)=>a-b),
+      secret:secretOpened,
+      onceMessageSeen,
+      constellationSeen
+    }));
+  }catch(e){}
+}
 
 
 /* ===== HERRAMIENTAS DE DESARROLLO LOCAL ===== */
@@ -1721,7 +2192,7 @@ function showScreen(id,{manual=false}={}){
   screens.forEach(s=>s.classList.toggle('active',s.id===id));
   currentIndex=target;
   updateUI();
-  if(id==='special'){scheduleBouquetChime()}
+  if(id==='special'){updateBouquetFromProgress();scheduleBouquetChime()}
   scheduleAutoplay();
   if(manual) playChime(510,.055);
 }
@@ -1791,6 +2262,35 @@ function populateFlowers(layer,count,mode){
 populateFlowers('intro',14,'intro');populateFlowers('transition',18,'transition');populateFlowers('garden',46,'garden');populateFlowers('central',20,'central');populateFlowers('final',34,'final');
 document.querySelectorAll('[data-snapshot-flower]').forEach((el,i)=>{el.innerHTML=flowerSVG(100)});
 
+
+/* El jardín físico crece con cada descubrimiento */
+function plantHTML(index,secret=false){
+  return `<div class="memory-plant ${secret?'secret-plant':''}" data-memory-index="${secret?'secret':index}">
+    <i class="memory-stem"></i>
+    <i class="memory-leaf l"></i>
+    <i class="memory-leaf r"></i>
+    <div class="memory-head">${flowerSVG(78)}</div>
+  </div>`;
+}
+document.querySelectorAll('[data-live-garden]').forEach(layer=>{
+  layer.innerHTML=
+    [0,1,2,3,4].map(i=>plantHTML(i,false)).join('')+
+    plantHTML(-1,true);
+});
+
+function renderLivingGarden(){
+  document.querySelectorAll('.memory-plant').forEach(plant=>{
+    const key=plant.dataset.memoryIndex;
+    const discovered=key==='secret'
+      ? secretOpened
+      : regularOpened.has(Number(key));
+    plant.classList.toggle('bloomed',discovered);
+  });
+  const seal=document.getElementById('memorySeal');
+  if(seal)seal.classList.toggle('visible',onceMessageSeen);
+}
+
+
 /* Interactive flowers + secret */
 const flowerData=[
   {title:'Algo que adoro de ti',text:'Tu forma de ver el mundo. Incluso en los días más simples, siempre encuentras algo que los vuelve distintos.'},
@@ -1812,20 +2312,165 @@ flowerData.forEach((f,i)=>menu.appendChild(makeFlowerButton(f,i,false)));
 menu.appendChild(makeFlowerButton(secretFlower,-1,true));
 
 function openFlower(f,button,index,secret){
-  menu.classList.add('focus-mode');button.classList.add('opening');playChime(secret?780:660,.085);
-  if(secret){secretOpened=true;button.classList.add('discovered')}else{regularOpened.add(index);button.classList.add('discovered')}
+  menu.classList.add('focus-mode');
+  button.classList.add('opening');
+  playChime(secret?780:660,.085);
+
+  if(secret){
+    const wasNew=!secretOpened;
+    secretOpened=true;
+    button.classList.add('discovered');
+    if(wasNew && !constellationSeen)pendingConstellation=true;
+  }else{
+    const wasNew=!regularOpened.has(index);
+    regularOpened.add(index);
+    button.classList.add('discovered');
+    if(wasNew && regularOpened.size===5 && !onceMessageSeen)pendingOnceMessage=true;
+  }
+
+  saveGardenState();
+  renderLivingGarden();
+  updateBouquetFromProgress();
   updateFlowerStatus();
-  setTimeout(()=>{document.getElementById('modalFlower').innerHTML=flowerSVG(112);document.getElementById('modalTitle').textContent=f.title;document.getElementById('modalText').textContent=f.text;modal.classList.add('open')},210);
+
+  setTimeout(()=>{
+    document.getElementById('modalFlower').innerHTML=flowerSVG(112);
+    document.getElementById('modalTitle').textContent=f.title;
+    document.getElementById('modalText').textContent=f.text;
+    modal.classList.add('open');
+  },210);
 }
-function updateFlowerStatus(){
-  flowerCount.textContent=regularOpened.size;
-  if(regularOpened.size>0){interactiveNext.disabled=false;interactiveNext.textContent='Seguir ›';}
-  if(regularOpened.size===5){flowerStatus.innerHTML='<strong>Jardín completo ♡</strong>';interactiveNext.classList.add('complete');interactiveNext.textContent='Seguir con el jardín completo ›';flowerStatus.classList.add('complete-flash');showToast('Jardín completo ♡',2200);playChime(880,.11)}
+
+function updateFlowerStatus({silent=false}={}){
+  const currentCount=document.getElementById('flowerCount');
+  if(currentCount)currentCount.textContent=regularOpened.size;
+
+  if(regularOpened.size>0){
+    interactiveNext.disabled=false;
+    interactiveNext.textContent='Seguir ›';
+  }else{
+    interactiveNext.disabled=true;
+    interactiveNext.textContent='Abre una flor para continuar';
+  }
+
+  if(regularOpened.size===5){
+    flowerStatus.innerHTML='<strong>Jardín completo ♡</strong>';
+    interactiveNext.classList.add('complete');
+    interactiveNext.textContent='Seguir con el jardín completo ›';
+    if(!silent){
+      flowerStatus.classList.add('complete-flash');
+      showToast('Jardín completo ♡',2200);
+      playChime(880,.11);
+    }
+  }else{
+    flowerStatus.innerHTML=`<strong id="flowerCount">${regularOpened.size}</strong> de 5 flores descubiertas`;
+    interactiveNext.classList.remove('complete');
+  }
+
   updateUI();
 }
-function closeFlowerModal(){modal.classList.remove('open');setTimeout(()=>{menu.classList.remove('focus-mode');menu.querySelectorAll('.opening').forEach(x=>x.classList.remove('opening'))},230)}
+
+function closeFlowerModal(){
+  modal.classList.remove('open');
+
+  setTimeout(()=>{
+    menu.classList.remove('focus-mode');
+    menu.querySelectorAll('.opening').forEach(x=>x.classList.remove('opening'));
+
+    if(pendingOnceMessage){
+      pendingOnceMessage=false;
+      setTimeout(showOnceMessage,280);
+    }else if(pendingConstellation){
+      pendingConstellation=false;
+      setTimeout(showConstellation,280);
+    }
+  },230);
+}
+
 document.getElementById('closeModal').addEventListener('click',closeFlowerModal);
 modal.addEventListener('click',e=>{if(e.target===modal)closeFlowerModal()});
+
+
+/* Mensaje irrepetible */
+const onceOverlay=document.getElementById('onceOverlay');
+const constellationOverlay=document.getElementById('constellationOverlay');
+
+function showOnceMessage(){
+  if(onceMessageSeen)return;
+  onceMessageSeen=true;
+  saveGardenState();
+  renderLivingGarden();
+  onceOverlay.classList.add('show');
+  onceOverlay.setAttribute('aria-hidden','false');
+}
+function closeOnceMessage(){
+  onceOverlay.classList.remove('show');
+  onceOverlay.setAttribute('aria-hidden','true');
+}
+document.getElementById('onceClose').addEventListener('click',closeOnceMessage);
+
+/* La flor secreta forma ZA con una constelación */
+let constellationTimer=null;
+function showConstellation(){
+  if(constellationSeen)return;
+  constellationSeen=true;
+  saveGardenState();
+  constellationOverlay.classList.add('show');
+  constellationOverlay.setAttribute('aria-hidden','false');
+  clearTimeout(constellationTimer);
+  constellationTimer=setTimeout(closeConstellation,6200);
+}
+function closeConstellation(){
+  clearTimeout(constellationTimer);
+  constellationOverlay.classList.remove('show');
+  constellationOverlay.setAttribute('aria-hidden','true');
+}
+constellationOverlay.addEventListener('click',closeConstellation);
+
+/* Restaura el jardín si vuelve otro día */
+function restoreDiscoveredState(){
+  menu.querySelectorAll('.flower-choice').forEach(btn=>{
+    const key=btn.dataset.index;
+    const discovered=key==='secret'
+      ? secretOpened
+      : regularOpened.has(Number(key));
+    btn.classList.toggle('discovered',discovered);
+  });
+  updateFlowerStatus({silent:true});
+  renderLivingGarden();
+  updateBouquetFromProgress();
+}
+restoreDiscoveredState();
+
+
+
+
+function updateBouquetFromProgress(){
+  const blooms=[...document.querySelectorAll('#special .bloom')];
+  const stems=[...document.querySelectorAll('#special .stem-path')];
+
+  // 5 flores normales + flor secreta + una flor extra al completar todo.
+  let earned=regularOpened.size;
+  if(secretOpened)earned++;
+  if(regularOpened.size===5)earned++;
+  earned=Math.max(1,Math.min(7,earned));
+
+  blooms.forEach((node,i)=>node.classList.toggle('unearned',i>=earned));
+  stems.forEach((node,i)=>node.classList.toggle('unearned',i>=earned));
+
+  const progress=document.getElementById('bouquetProgress');
+  if(!progress)return;
+
+  if(regularOpened.size===5 && secretOpened){
+    progress.innerHTML='<strong>Ramo completo</strong> · encontraste hasta lo que estaba escondido';
+  }else if(regularOpened.size===5){
+    progress.innerHTML='<strong>5 flores</strong> · completaste el jardín';
+  }else{
+    const plural=regularOpened.size===1?'flor':'flores';
+    progress.innerHTML=`Este ramo lleva <strong>${regularOpened.size} ${plural}</strong> que tú encontraste`;
+  }
+}
+
 
 /* Bouquet replay + completion chime */
 function restartBouquet(){
@@ -2038,10 +2683,15 @@ document.getElementById('downloadMonogram').addEventListener('click', async()=>{
 
 function updateFinalReaction(){
   const el=document.getElementById('finalReaction');if(!el)return;
-  if(regularOpened.size===5 && secretOpened)el.textContent='Encontraste todo lo que quería decirte… incluso lo que escondí.';
-  else if(regularOpened.size===5)el.textContent='Encontraste todo lo que quería decirte.';
-  else if(regularOpened.size>0)el.textContent='Y todavía quedó algo aquí para cuando quieras volver.';
-  else el.textContent='Este jardín puede esperar a que vuelvas cuando quieras.';
+  if(regularOpened.size===5 && secretOpened){
+    el.textContent='Encontraste todo lo que quería decirte… incluso lo que escondí entre las estrellas.';
+  }else if(regularOpened.size===5){
+    el.textContent='Hiciste florecer todo el jardín. Lo demás puede esperar a que vuelvas.';
+  }else if(regularOpened.size>0){
+    el.textContent='Este jardín quedó distinto porque tú pasaste por él.';
+  }else{
+    el.textContent='Este jardín puede esperar a que vuelvas cuando quieras.';
+  }
 }
 document.getElementById('restartExperience').addEventListener('click',()=>{showScreen('intro',{manual:true})});
 
